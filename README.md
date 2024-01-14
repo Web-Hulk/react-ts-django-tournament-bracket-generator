@@ -27,18 +27,38 @@
    - **Match Scheduling**: Depending on the type of tournament, you might need to implement a feature for scheduling matches. This could include date, time, and location details for each match.
    - **Notifications**: Consider implementing a notification system to keep users informed about upcoming matches, tournament results, and other important updates.
 
-Plan for 10.01.2024
-~~2. GET and POST for Players Registration [Frontend]~~
-~~3. Setup Django REST Framework [Backend] - It makes to build API easier~~
-~~4. Add GET method by REST Framework [Backend]~~
-~~5. Add POST method by REST Framework [Backend]~~
+Plan for 10.01.2024:
 
-6. Fix URL on the backend! [Backend]
-7. Write another POST endpoint to understand what's going on [Backend]
-8. Think about PUT and PATCH request [Backend]
-9. Delete endpoint [Backend]
-10. Create Github repository
+~~1. GET and POST for Players Registration [Frontend]~~
 
-Generate link and QR Code to share the Tournament with other people [Frontend]
+~~2. Setup Django REST Framework [Backend] - It makes to build API easier~~
 
-<!-- When finished focus on content, navbar or something like this to not have any places where user cannot go to home page when create tournament -->
+~~3. Add GET method by REST Framework [Backend]~~
+
+~~4. Add POST method by REST Framework [Backend]~~
+
+~~5. Fix URL on the backend! [Backend]~~
+
+~~6. Create Github repository~~
+
+~~7. Generate link and QR Code to forward users to Players Registration [Frontend]~~
+
+8. Write another POST endpoint to understand what's going on [Backend]
+9. Think about PUT and PATCH request [Backend]
+10. Delete endpoint [Backend]
+11. Check default values for Backend Endpoint Fields - if they are the same like on the frontend
+12. Create pages for:
+
+~~- General Tournament Principles~~
+
+~~- General Rules of Tournament~~
+
+~~- Tournament Statute~~
+
+~~- Prizes~~
+
+- Tournament Location
+
+13. Consider to implement something like blog posts on the main page of the tournament
+
+14. Think about simple navigation between pages in the FC24 application

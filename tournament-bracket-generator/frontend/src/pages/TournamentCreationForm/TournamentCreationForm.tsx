@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import axios from "axios";
+import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -46,7 +47,7 @@ export const TournamentCreationForm = () => {
     setIsPlayerRegistrationLinkDisplayed(true);
 
     axios
-      .post("http://127.0.0.1:8000/players/create-tournament/", formData)
+      .post("http://127.0.0.1:8000/create-tournament/", formData)
       .then((response) => {
         console.log(response);
       })
@@ -85,20 +86,30 @@ export const TournamentCreationForm = () => {
           onChange={handleInput}
           defaultValue={formData.number_of_players}
         />
+
         <select name="type" onChange={handleSelect}>
           <option value={"single"}>Single Elimination</option>
           <option value={"double"}>Double Elimination</option>
           <option value={"round-robin"}>Round Robin</option>
         </select>
 
-        {/* Generate link and QR Code to share when onClick  */}
+        <textarea rows={20} cols={40}>
+          - Tournament is only for ING Hubs Poland employess (Business Support
+          Cluster) - Snack and Drinks included - Registration via Forms only
+          [LINK] - Your manager needs to approve your attendance, if your
+          schedule is later than 15:00
+        </textarea>
+
         <button type="button" onClick={handleCreateButton}>
           Create
         </button>
       </Box>
 
       {isPlayerRegistrationLinkDisplayed ? (
-        <Link to={"/players-registration"}>Players Registration</Link>
+        <>
+          <Link to={"/players-registration"}>Players Registration</Link>
+          <QRCodeSVG value="http://localhost:5173/players-registration" />
+        </>
       ) : null}
     </Box>
   );

@@ -50,7 +50,7 @@ export const PlayersRegistration = () => {
     console.log("POST params: ", formData);
 
     axios
-      .post("http://127.0.0.1:8000/players/create-player/", formData)
+      .post("http://127.0.0.1:8000/create-player/", formData)
       .then((response) => {
         console.log(response);
       })

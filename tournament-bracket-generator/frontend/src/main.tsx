@@ -5,12 +5,16 @@ import ErrorPage from "./components/ErrorPage/ErrorPage.tsx";
 import "./index.scss";
 import { Dashboard } from "./pages/Dashboard/Dashboard.tsx";
 import { ForgotPassword } from "./pages/ForgotPassword/ForgotPassword.tsx";
+import { GeneralTournamentPrinciples } from "./pages/GeneralTournamentPrinciples/GeneralTournamentPrinciples.tsx";
+import { GeneralTournamentRules } from "./pages/GeneralTournamentRules/GeneralTournamentRules.tsx";
 import { Home } from "./pages/Home/Home.tsx";
 import { Login } from "./pages/Login/Login.tsx";
+import { PlayersRegistration } from "./pages/PlayersRegistration/PlayersRegistration.tsx";
+import { Prizes } from "./pages/Prizes/Prizes.tsx";
 import { Registration } from "./pages/Registration/Registration.tsx";
 import { TournamentCreationForm } from "./pages/TournamentCreationForm/TournamentCreationForm.tsx";
+import { TournamentStatute } from "./pages/TournamentStatute/TournamentStatute.tsx";
 import { Verification } from "./pages/Verification/Verification.tsx";
-import { PlayersRegistration } from "./pages/PlayersRegistration/PlayersRegistration.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +29,10 @@ const router = createBrowserRouter([
   { path: "/dashboard", element: <Dashboard /> },
   { path: "/create-tournament", element: <TournamentCreationForm /> },
   { path: "/players-registration", element: <PlayersRegistration /> },
+  { path: "/prizes", element: <Prizes /> },
+  { path: "/general-principles", element: <GeneralTournamentPrinciples /> },
+  { path: "/rules", element: <GeneralTournamentRules /> },
+  { path: "/statute", element: <TournamentStatute /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

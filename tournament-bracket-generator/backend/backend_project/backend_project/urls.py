@@ -18,6 +18,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-  path('players/', include('tournament_bracket_generator.urls')),
+  path('', include('tournament_bracket_generator.urls')),
   path('admin/', admin.site.urls),
 ]
