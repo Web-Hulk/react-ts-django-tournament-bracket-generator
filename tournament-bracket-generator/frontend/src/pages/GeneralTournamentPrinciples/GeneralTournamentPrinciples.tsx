@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom";
+
 export const GeneralTournamentPrinciples = () => {
   return (
     <div>
-      <h1>Welcome to the Tournament!</h1>
-
       <p>
         We're excited to have you participate in our upcoming event. Here are
         some general principles to guide you:
@@ -33,7 +33,7 @@ export const GeneralTournamentPrinciples = () => {
         </li>
         <li>
           <strong>Registration:</strong> Please register via our online form
-          [LINK].
+          {/* [LINK]. */}[<Link to="/players-registration">LINK</Link>].
         </li>
         <li>
           <strong>Manager Approval:</strong> If your schedule extends beyond

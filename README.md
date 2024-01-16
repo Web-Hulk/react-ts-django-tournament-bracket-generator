@@ -43,6 +43,8 @@ Plan for 10.01.2024:
 
 ~~7. Generate link and QR Code to forward users to Players Registration [Frontend]~~
 
+~~14. Think about simple navigation between pages in the FC24 application~~
+
 8. Write another POST endpoint to understand what's going on [Backend]
 9. Think about PUT and PATCH request [Backend]
 10. Delete endpoint [Backend]
@@ -61,4 +63,6 @@ Plan for 10.01.2024:
 
 13. Consider to implement something like blog posts on the main page of the tournament
 
-14. Think about simple navigation between pages in the FC24 application
+14. Think about how to manage group stages [Frontend]
+
+15. Think about how to manage knockout stage [Frontend]
