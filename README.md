@@ -27,42 +27,30 @@
    - **Match Scheduling**: Depending on the type of tournament, you might need to implement a feature for scheduling matches. This could include date, time, and location details for each match.
    - **Notifications**: Consider implementing a notification system to keep users informed about upcoming matches, tournament results, and other important updates.
 
-Plan for 10.01.2024:
-
-~~1. GET and POST for Players Registration [Frontend]~~
-
-~~2. Setup Django REST Framework [Backend] - It makes to build API easier~~
-
-~~3. Add GET method by REST Framework [Backend]~~
-
-~~4. Add POST method by REST Framework [Backend]~~
-
-~~5. Fix URL on the backend! [Backend]~~
-
-~~6. Create Github repository~~
-
-~~7. Generate link and QR Code to forward users to Players Registration [Frontend]~~
-
-~~14. Think about simple navigation between pages in the FC24 application~~
-
-8. Write another POST endpoint to understand what's going on [Backend]
-9. Think about PUT and PATCH request [Backend]
-10. Delete endpoint [Backend]
-11. Check default values for Backend Endpoint Fields - if they are the same like on the frontend
-12. Create pages for:
-
-~~- General Tournament Principles~~
-
-~~- General Rules of Tournament~~
-
-~~- Tournament Statute~~
-
-~~- Prizes~~
+4. Think about PUT and PATCH request [Backend]
+5. Check default values for Backend Endpoint Fields - if they are the same like on the frontend
+6. Create pages for:
 
 - Tournament Location
 
 13. Consider to implement something like blog posts on the main page of the tournament
 
-14. Think about how to manage group stages [Frontend]
+14. Find out how to register (without logging functionality) that user was already registered to not let him do this twice or more.
 
-15. Think about how to manage knockout stage [Frontend]
+15. Let users reverse their submit response (in the case they want to resign from participation) [Frontend] [Backend]
+
+16. User Search functionality (something like autocomplete) - let users to find themselves on the page [Frontend]
+
+17. Fixture Feature: Having a dedicated page for fixtures that users can access from the sidebar is a great idea. This would provide users with an overview of all matches and allow them to easily keep track of past, ongoing, and future matches. [Backend] [Frontend]
+
+18. Clickable Table Rows: Making the table rows clickable to show more details about a player or a match is a common and intuitive design pattern. This would allow users to access more information without cluttering the main table view.
+
+19. Player Detail Page: A detail page for each player that shows all their matches would be very useful. This could include information like the player’s past performance, upcoming matches, and statistics.
+
+20. Add Postman! [Backend]
+
+21. Add GraphQL [Frontend]
+
+22. What about Docker?! [DevOps]
+
+23. Test [Backend] [Frontend]

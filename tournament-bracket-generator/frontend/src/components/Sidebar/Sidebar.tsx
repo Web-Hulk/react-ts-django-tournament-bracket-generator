@@ -8,13 +8,15 @@ type Links = {
 const LINKS: Links[] = [
   { name: "Home", href: "" },
   { name: "Dashboard", href: "dashboard" },
-  { name: "Login", href: "login" },
-  { name: "Registration", href: "registration" },
+  { name: "Matches", href: "matches" },
   { name: "Players Registration", href: "players-registration" },
   { name: "General Principles", href: "general-principles" },
   { name: "Rules", href: "rules" },
   { name: "Statute", href: "statute" },
   { name: "Prizes", href: "prizes" },
+  { name: "Feedback", href: "feedback" },
+  // { name: "Login", href: "login" },
+  // { name: "Registration", href: "registration" },
 ];
 
 export const Sidebar = () => {

@@ -20,6 +20,7 @@ export const PlayersRegistration = () => {
     nick_name: "",
     email: "",
   });
+  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
 
   const getData = () => {
     axios
@@ -53,6 +54,7 @@ export const PlayersRegistration = () => {
       .post("http://127.0.0.1:8000/create-player/", formData)
       .then((response) => {
         console.log(response);
+        setIsFormSubmitted(true);
       })
       .catch((error) => {
         console.log(error);
@@ -63,39 +65,46 @@ export const PlayersRegistration = () => {
     <>
       <h1>Players Registration</h1>
 
-      <Box>
-        <input
-          type="text"
-          name="first_name"
-          placeholder="Enter you name"
-          onChange={handleInput}
-        />
-        <input
-          type="text"
-          name="last_name"
-          placeholder="Enter your surname"
-          onChange={handleInput}
-        />
-        <input
-          type="text"
-          name="nick_name"
-          placeholder="Enter your nickname"
-          onChange={handleInput}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          onChange={handleInput}
-        />
-        {/* <select>
+      {isFormSubmitted ? (
+        <Box>
+          Your registration form has been successfully submitted. We're excited
+          to have you join us. Stay tuned for further updated!
+        </Box>
+      ) : (
+        <Box>
+          <input
+            type="text"
+            name="first_name"
+            placeholder="Enter you name"
+            onChange={handleInput}
+          />
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Enter your surname"
+            onChange={handleInput}
+          />
+          <input
+            type="text"
+            name="nick_name"
+            placeholder="Enter your nickname"
+            onChange={handleInput}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            onChange={handleInput}
+          />
+          {/* <select>
         <option>D&CS</option>
       </select> */}
 
-        <button type="button" onClick={handleSubmitButton}>
-          Submit
-        </button>
-      </Box>
+          <button type="button" onClick={handleSubmitButton}>
+            Submit
+          </button>
+        </Box>
+      )}
     </>
   );
 };
