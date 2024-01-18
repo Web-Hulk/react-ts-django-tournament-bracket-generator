@@ -1,14 +1,22 @@
-import { Box } from "@mui/material";
+import { Box, debounce } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Autocomplete } from "../../components/Autocomplete/Autocomplete";
 
-interface PlayersDTO {}
+interface PlayersDTO extends PlayerType {
+  id: number;
+}
 
 type PlayerType = {
   first_name: string;
   last_name: string;
   nick_name: string;
   email: string;
+};
+
+type Autocomplete = {
+  userInput: string;
+  suggestionsList: PlayersDTO[];
 };
 
 // Allow Form Customization - Adding Fields like text input, select, etc.,
@@ -21,13 +29,17 @@ export const PlayersRegistration = () => {
     email: "",
   });
   const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+  const [autocompleteData, setAutocompleteData] = useState<Autocomplete>({
+    userInput: "",
+    suggestionsList: [],
+  });
 
   const getData = () => {
     axios
       .get("http://127.0.0.1:8000/players/")
       .then((response) => {
         console.log("response: ", response.data);
-        setPlayers(response.data);
+        setPlayers(response.data.results);
       })
       .catch(function (error) {
         console.log(error);
@@ -55,11 +67,43 @@ export const PlayersRegistration = () => {
       .then((response) => {
         console.log(response);
         setIsFormSubmitted(true);
+        setFormData({
+          first_name: "",
+          last_name: "",
+          nick_name: "",
+          email: "",
+        });
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  // Debounce effect!
+  const handleAutocomplete = debounce(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log("players: ", players);
+      const { value } = e.target;
+
+      // Filter the players based on the user's input
+      let filteredPlayers = players.filter(
+        ({ first_name, last_name, nick_name }) =>
+          `${first_name} ${last_name} ${nick_name}`
+            .toLowerCase()
+            .includes(value.toLowerCase())
+      );
+
+      if (value.length === 0) {
+        filteredPlayers = [];
+      }
+
+      setAutocompleteData({
+        userInput: value,
+        suggestionsList: filteredPlayers,
+      });
+    },
+    500
+  );
 
   return (
     <>
@@ -96,15 +140,17 @@ export const PlayersRegistration = () => {
             placeholder="Enter your email"
             onChange={handleInput}
           />
-          {/* <select>
-        <option>D&CS</option>
-      </select> */}
 
           <button type="button" onClick={handleSubmitButton}>
             Submit
           </button>
         </Box>
       )}
+
+      <Autocomplete
+        suggestionsList={autocompleteData.suggestionsList}
+        handleAutocomplete={handleAutocomplete}
+      />
     </>
   );
 };

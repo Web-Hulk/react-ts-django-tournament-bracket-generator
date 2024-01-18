@@ -39,13 +39,13 @@
 
 15. Let users reverse their submit response (in the case they want to resign from participation) [Frontend] [Backend]
 
-16. User Search functionality (something like autocomplete) - let users to find themselves on the page [Frontend]
+16. Fixture Feature: Having a dedicated page for fixtures that users can access from the sidebar is a great idea. This would provide users with an overview of all matches and allow them to easily keep track of past, ongoing, and future matches. [Backend] [Frontend]
 
-17. Fixture Feature: Having a dedicated page for fixtures that users can access from the sidebar is a great idea. This would provide users with an overview of all matches and allow them to easily keep track of past, ongoing, and future matches. [Backend] [Frontend]
+17. Clickable Table Rows: Making the table rows clickable to show more details about a player or a match is a common and intuitive design pattern. This would allow users to access more information without cluttering the main table view.
 
-18. Clickable Table Rows: Making the table rows clickable to show more details about a player or a match is a common and intuitive design pattern. This would allow users to access more information without cluttering the main table view.
+18. Player Detail Page: A detail page for each player that shows all their matches would be very useful. This could include information like the player’s past performance, upcoming matches, and statistics.
 
-19. Player Detail Page: A detail page for each player that shows all their matches would be very useful. This could include information like the player’s past performance, upcoming matches, and statistics.
+19. Clean TS interface and types through whole project!
 
 20. Add Postman! [Backend]
 

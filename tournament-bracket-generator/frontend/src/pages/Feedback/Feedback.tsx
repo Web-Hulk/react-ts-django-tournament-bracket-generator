@@ -39,11 +39,14 @@ export const Feedback = () => {
           <h1>Please, tell us how much you like the application!</h1>
 
           <div>
-            <button onClick={() => handleRateButton(1)}>1</button>
-            <button onClick={() => handleRateButton(2)}>2</button>
-            <button onClick={() => handleRateButton(3)}>3</button>
-            <button onClick={() => handleRateButton(4)}>4</button>
-            <button onClick={() => handleRateButton(5)}>5</button>
+            {[1, 2, 3, 4, 5].map((value) => (
+              <button
+                key={`Rate - ${value}`}
+                onClick={() => handleRateButton(value)}
+              >
+                {value}
+              </button>
+            ))}
           </div>
 
           <textarea name="comment" value={comment} onChange={handleComment} />
