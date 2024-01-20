@@ -141,14 +141,19 @@ export const PlayersRegistration = () => {
             onChange={handleInput}
           />
 
+          {/* When Submit added records is not available in autocomplete */}
           <button type="button" onClick={handleSubmitButton}>
             Submit
           </button>
         </Box>
+        // <Box>
+        //   We’re sorry, but registration for this tournament has closed. We’d
+        //   love to see you in the next one, so stay tuned for updates!
+        // </Box>
       )}
 
       <Autocomplete
-        suggestionsList={autocompleteData.suggestionsList}
+        autocompleteData={autocompleteData}
         handleAutocomplete={handleAutocomplete}
       />
     </>
