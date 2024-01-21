@@ -20,7 +20,8 @@ class Player(models.Model):
   email = models.EmailField(unique=True, verbose_name="email")
 
   def __str__(self):
-    return f"ID: {self.id} - {self.first_name} {self.last_name}"
+    # return f"ID: {self.id} - {self.first_name} {self.last_name}"
+    return f"{self.first_name} {self.last_name}"
 
 class Fixture(models.Model):
   LEVELS = [
@@ -63,7 +64,7 @@ class GroupStage(models.Model):
   qualified = models.BooleanField(verbose_name='qualified')
 
   def __str__(self):
-    return f"{self.group_name}: {self.player.first_name} {self.player.last_name}"
+    return f"Group {self.group_name}: {self.player.first_name} {self.player.last_name}"
 
 # class KnockoutStage(models.Model):
 #   LEVELS = [
@@ -75,15 +76,27 @@ class GroupStage(models.Model):
 
 #   player_name = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='knockout_player', verbose_name='player_name')
 #   opponent_name = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='knockout_opponent', verbose_name='opponent_name')
-#   player_goals_1st_leg = models.IntegerField(validators=[MinValueValidator(0)], verbose_name='player goals 1st leg')
-#   opponent_goals_1st_leg = models.IntegerField(validators=[MinValueValidator(0)], verbose_name='opponent goals 1st leg')
-#   player_goals_2nd_leg = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, verbose_name='player goals 2nd leg')
-#   opponent_goals_2nd_leg = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, verbose_name='opponent goals 2nd leg')
+#   player_goals_1st_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='player goals 1st leg')
+#   opponent_goals_1st_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='opponent goals 1st leg')
+#   player_goals_2nd_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], null=True, blank=True, verbose_name='player goals 2nd leg')
+#   opponent_goals_2nd_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], null=True, blank=True, verbose_name='opponent goals 2nd leg')
 #   stage = models.CharField(max_length=2, choices=LEVELS, verbose_name='stage')
+
+#   def __str__(self):
+#     return f"{self.stage}: {self.player_name.first_name} {self.player_name.last_name} vs {self.opponent_name.first_name} {self.opponent_name.last_name}"
 
 class Feedback(models.Model):
   rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name='rate')
   comment = models.TextField(max_length=500, verbose_name='comment')
 
   def __str__(self):
-    return f"{self.rate}"
+    return f"Rate: {self.rate}"
+  
+class RegistrationStatus(models.Model):
+  status = models.BooleanField(verbose_name='status')
+
+  class Meta:
+    verbose_name_plural = 'Registration Status'
+
+  def __str__(self):
+    return f"Registration Opened: {self.status}"

@@ -2,8 +2,8 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Player, Fixture
-from .serializers import PlayerSerializer, CreatePlayerSerializer, CreateTournamentSerializer, FixtureSerializer, CreateFeedbackSerializer
+from .models import Player, Fixture, RegistrationStatus
+from .serializers import PlayerSerializer, CreatePlayerSerializer, CreateTournamentSerializer, FixtureSerializer, CreateFeedbackSerializer, RegistrationStatusSerializer
 
 class PlayerView(generics.ListAPIView):
     queryset = Player.objects.all()
@@ -42,3 +42,7 @@ class CreateFeedbackView(APIView):
             serializer.save()
             return Response(serializer.data, status = 201)
         return Response(serializer.errors, status = 400)
+
+class RegistrationStatusView(generics.ListAPIView):
+    queryset = RegistrationStatus.objects.all()
+    serializer_class = RegistrationStatusSerializer

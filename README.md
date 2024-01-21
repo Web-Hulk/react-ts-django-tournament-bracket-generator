@@ -12,24 +12,9 @@
 
 1. **Form Submissions**: The application should be able to collect form submissions from potential users, save them in the database, and sort them by date and time. When the owner of the tournament creates a tournament, they should be able to send a link or QR code in a promotional post, and users can fill in the form.
 
-2. **User Verification**: When a user signs up, a verification email should be sent. Once the user verifies their account, they should be forwarded to finish setting up their account. The user should be able to set their full name and password. Remember to inform the user to check their inbox to log in.
+2. Think about PUT and PATCH request [Backend]
 
-3. **BING Suggestions**:
-
-   - **Ongoing Tournaments**: A list or grid of tournaments that are currently in progress. Clicking on a tournament could take the user to a detailed view of that tournament's bracket.
-   - **Upcoming Matches**: A schedule of the user's upcoming matches in all ongoing tournaments.
-   - **Past Results**: A history of the user's past tournaments, including the final standings and brackets.
-   - **Account Management**: Options for the user to update their profile information, change their password, or log out.
-   - **Role-Based Access Control**: Different users should have different permissions. For example, tournament owners should be able to edit and delete tournaments, while players should only be able to view and register for tournaments.
-   - **Data Export**: The ability to export player data to common formats like Excel or PDF.
-   - **Final Standings Display**: Display the final standings in a visually appealing way, possibly using graphics or animations to highlight the top three players.
-   - **Tournament Promotion**: Consider adding features to help users promote their tournaments, such as social media integration or promotional materials.
-   - **Match Scheduling**: Depending on the type of tournament, you might need to implement a feature for scheduling matches. This could include date, time, and location details for each match.
-   - **Notifications**: Consider implementing a notification system to keep users informed about upcoming matches, tournament results, and other important updates.
-
-4. Think about PUT and PATCH request [Backend]
-
-5. Create pages for:
+3. Create pages for:
 
 - Tournament Location
 
@@ -53,17 +38,23 @@
 
 22. Test [Backend] [Frontend]
 
-23. People who registered after 16th player should be automatically assigned to awaiting list [Backend] [Frontend]
+23. Swagger
 
-24. Can't assign more than 4 people to one group
+24. Can't assign more than 4 people to one group [Backend Serializer or View]
 
 25. Add backend tag to check if the registration form should be available or nice message that signing is over? [Backend endpoint?!]
 
-26. Can 2 players or more can be on the same place in the group?
+26. Can 2 players or more can be on the same place in the group? [Backend Serializer or View]
 
 27. Fixture Feature: Having a dedicated page for fixtures that users can access from the sidebar is a great idea. This would provide users with an overview of all matches and allow them to easily keep track of past, ongoing, and future matches. [Backend] [Frontend]
 
 28. Knockout Stage!
+
+29. **Data Export**: The ability to export player data to common formats like Excel or PDF.
+
+30. **Final Standings Display**: Display the final standings in a visually appealing way, possibly using graphics or animations to highlight the top three players.
+
+31. Customize Admin Panel - [https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site]
 
 PLANS FOR MATCHES AND GROUPS:
 Sure, I’d be happy to provide some guidance. Here are my thoughts:
@@ -81,3 +72,15 @@ Tournament Options: Starting with a round-robin option for the group stage is a 
 Group Assignment: Since the group assignment will be done through a professional draw, it would be most efficient to handle this on the backend. Once the draw is complete, you can update the database with the group assignments. Then, when the frontend needs to display the groups, it can simply fetch the latest data from the backend.
 
 I hope this helps! Let me know if you have any other questions or need further clarification. 😊
+
+**Future improvements ideas:**
+
+- **User Verification**: When a user signs up, a verification email should be sent. Once the user verifies their account, they should be forwarded to finish setting up their account. The user should be able to set their full name and password. Remember to inform the user to check their inbox to log in.
+- **Ongoing Tournaments**: A list or grid of tournaments that are currently in progress. Clicking on a tournament could take the user to a detailed view of that tournament's bracket.
+- **Upcoming Matches**: A schedule of the user's upcoming matches in all ongoing tournaments.
+- **Past Results**: A history of the user's past tournaments, including the final standings and brackets.
+- **Account Management**: Options for the user to update their profile information, change their password, or log out.
+- **Role-Based Access Control**: Different users should have different permissions. For example, tournament owners should be able to edit and delete tournaments, while players should only be able to view and register for tournaments.
+- **Tournament Promotion**: Consider adding features to help users promote their tournaments, such as social media integration or promotional materials.
+- **Match Scheduling**: Depending on the type of tournament, you might need to implement a feature for scheduling matches. This could include date, time, and location details for each match.
+- **Notifications**: Consider implementing a notification system to keep users informed about upcoming matches, tournament results, and other important updates.

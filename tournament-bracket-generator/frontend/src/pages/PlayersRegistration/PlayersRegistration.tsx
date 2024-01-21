@@ -33,13 +33,30 @@ export const PlayersRegistration = () => {
     userInput: "",
     suggestionsList: [],
   });
+  const [isRegistrationOpened, setIsRegistrationOpened] =
+    useState<boolean>(false);
 
   const getData = () => {
     axios
       .get("http://127.0.0.1:8000/players/")
       .then((response) => {
-        console.log("response: ", response.data);
+        console.log("getData response: ", response.data);
         setPlayers(response.data.results);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getRegistrationStatus = () => {
+    axios
+      .get("http://127.0.0.1:8000/registration-status/")
+      .then((response) => {
+        console.log(
+          "getRegistrationStatus response: ",
+          response.data.results[0].status
+        );
+        setIsRegistrationOpened(response.data.results[0].status);
       })
       .catch(function (error) {
         console.log(error);
@@ -48,6 +65,7 @@ export const PlayersRegistration = () => {
 
   useEffect(() => {
     getData();
+    getRegistrationStatus();
   }, []);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,47 +127,53 @@ export const PlayersRegistration = () => {
     <>
       <h1>Players Registration</h1>
 
-      {isFormSubmitted ? (
-        <Box>
-          Your registration form has been successfully submitted. We're excited
-          to have you join us. Stay tuned for further updated!
-        </Box>
+      {/* Refactor this part - it is worth to split this whole part below! */}
+      {isRegistrationOpened ? (
+        <>
+          {isFormSubmitted ? (
+            <Box>
+              Your registration form has been successfully submitted. We're
+              excited to have you join us. Stay tuned for further updated!
+            </Box>
+          ) : (
+            <Box>
+              <input
+                type="text"
+                name="first_name"
+                placeholder="Enter you name"
+                onChange={handleInput}
+              />
+              <input
+                type="text"
+                name="last_name"
+                placeholder="Enter your surname"
+                onChange={handleInput}
+              />
+              <input
+                type="text"
+                name="nick_name"
+                placeholder="Enter your nickname"
+                onChange={handleInput}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                onChange={handleInput}
+              />
+
+              {/* When Submit added records is not available in autocomplete */}
+              <button type="button" onClick={handleSubmitButton}>
+                Submit
+              </button>
+            </Box>
+          )}
+        </>
       ) : (
         <Box>
-          <input
-            type="text"
-            name="first_name"
-            placeholder="Enter you name"
-            onChange={handleInput}
-          />
-          <input
-            type="text"
-            name="last_name"
-            placeholder="Enter your surname"
-            onChange={handleInput}
-          />
-          <input
-            type="text"
-            name="nick_name"
-            placeholder="Enter your nickname"
-            onChange={handleInput}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            onChange={handleInput}
-          />
-
-          {/* When Submit added records is not available in autocomplete */}
-          <button type="button" onClick={handleSubmitButton}>
-            Submit
-          </button>
+          We’re sorry, but registration for this tournament has closed. We’d
+          love to see you in the next one, so stay tuned for updates!
         </Box>
-        // <Box>
-        //   We’re sorry, but registration for this tournament has closed. We’d
-        //   love to see you in the next one, so stay tuned for updates!
-        // </Box>
       )}
 
       <Autocomplete

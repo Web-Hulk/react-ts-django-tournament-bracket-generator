@@ -1,10 +1,9 @@
 from rest_framework import serializers
-from .models import Player, Tournament, Fixture, Feedback
+from .models import Player, Tournament, Fixture, Feedback, RegistrationStatus
 
 class PlayerSerializer(serializers.ModelSerializer):
   class Meta:
     model = Player
-    # fields = '__all__'
     fields = ('id', 'first_name', 'last_name', 'nick_name', 'email')
 
 class CreatePlayerSerializer(serializers.ModelSerializer):
@@ -26,3 +25,8 @@ class CreateFeedbackSerializer(serializers.ModelSerializer):
   class Meta:
     model = Feedback
     fields = ('rate', 'comment')
+
+class RegistrationStatusSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = RegistrationStatus
+    fields = '__all__'
