@@ -1,24 +1,8 @@
 import { Box } from "@mui/material";
-
-// Redundance
-interface PlayersDTO extends PlayerType {
-  id: number;
-}
-
-type PlayerType = {
-  first_name: string;
-  last_name: string;
-  nick_name: string;
-  email: string;
-};
-
-type Autocomplete = {
-  userInput: string;
-  suggestionsList: PlayersDTO[];
-};
+import { AutocompleteData } from "../../types";
 
 type AutocompleteProps = {
-  autocompleteData: Autocomplete;
+  autocompleteData: AutocompleteData;
   handleAutocomplete: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

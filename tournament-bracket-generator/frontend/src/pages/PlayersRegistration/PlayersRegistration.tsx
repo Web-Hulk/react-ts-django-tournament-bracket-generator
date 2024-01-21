@@ -2,34 +2,19 @@ import { Box, debounce } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Autocomplete } from "../../components/Autocomplete/Autocomplete";
-
-interface PlayersDTO extends PlayerType {
-  id: number;
-}
-
-type PlayerType = {
-  first_name: string;
-  last_name: string;
-  nick_name: string;
-  email: string;
-};
-
-type Autocomplete = {
-  userInput: string;
-  suggestionsList: PlayersDTO[];
-};
+import { AutocompleteData, Player, PlayerDTO } from "../../types";
 
 // Allow Form Customization - Adding Fields like text input, select, etc.,
 export const PlayersRegistration = () => {
-  const [players, setPlayers] = useState<PlayersDTO[]>([]);
-  const [formData, setFormData] = useState<PlayerType>({
+  const [players, setPlayers] = useState<PlayerDTO[]>([]);
+  const [formData, setFormData] = useState<Player>({
     first_name: "",
     last_name: "",
     nick_name: "",
     email: "",
   });
   const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-  const [autocompleteData, setAutocompleteData] = useState<Autocomplete>({
+  const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>({
     userInput: "",
     suggestionsList: [],
   });
