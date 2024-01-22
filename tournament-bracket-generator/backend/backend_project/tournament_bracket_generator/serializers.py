@@ -28,6 +28,11 @@ class GroupStageSerializer(serializers.ModelSerializer):
     model = GroupStage
     fields = ('player', 'group_name', 'position', 'matches_played', 'wins', 'draws', 'loses', 'goals_for', 'goals_against', 'goals_difference', 'points', 'qualified')
 
+  def to_representation(self, instance):
+    representation = super().to_representation(instance)
+    print(representation)
+    return {representation['group_name']: representation}
+  
 class CreateFeedbackSerializer(serializers.ModelSerializer):
   class Meta:
     model = Feedback

@@ -1,36 +1,38 @@
-// import axios from "axios";
-// import { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { GroupTable } from "./GroupTable/GroupTable";
-import { groupsData } from "./data/groups";
+import { Groups } from "../../types";
 
 export const GroupStage = () => {
-  // const [groupStagesData, setGroupStagesData] = useState<Group[]>([]);
+  const [groupStagesData, setGroupStagesData] = useState<Groups[]>([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://127.0.0.1:8000/group-stages/")
-  //     .then((response) => {
-  //       console.log("Group Stages: ", response.data.results);
-  //       setGroupStagesData(response.data.results);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/group-stages/")
+      .then((response) => {
+        console.log("groupStagesData: ", response.data.results);
+        setGroupStagesData(response.data.results);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-  const groups = ["A", "B", "C", "D"].map((groupName) => (
-    <GroupTable
-      key={`Group ${groupName}`}
-      groupsData={groupsData}
-      groupName={`Group ${groupName}`}
-    />
-  ));
+  const groups = ["A", "B", "C", "D"].map((groupName) => {
+    const groupData = groupStagesData.filter((item) => item[groupName]);
+    return (
+      <GroupTable
+        key={groupName}
+        groupsData={groupData}
+        groupName={groupName}
+      />
+    );
+  });
 
-  // Different implementation
-  // const groups = ['A', 'B', 'C', 'D'].map(groupName => {
-  //   const groupData = groupStagesData.filter(stage => stage.group_name === groupName);
-  //   return <GroupTable key={groupName} groupData={groupData} />;
-  // });
-
-  return <div>{groups}</div>;
+  return (
+    <div>
+      <h1>Groups</h1>
+      {groups}
+    </div>
+  );
 };

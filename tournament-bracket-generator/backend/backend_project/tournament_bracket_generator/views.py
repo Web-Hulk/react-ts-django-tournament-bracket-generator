@@ -34,7 +34,7 @@ class FixtureView(generics.ListAPIView):
     serializer_class = FixtureSerializer
 
 class GroupStageView(generics.ListAPIView):
-    queryset = GroupStage.objects.all()
+    queryset = GroupStage.objects.all().order_by('-points', '-goals_difference')
     serializer_class = GroupStageSerializer
 
 class CreateFeedbackView(APIView):

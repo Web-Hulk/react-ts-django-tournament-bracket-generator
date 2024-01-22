@@ -30,7 +30,7 @@ export type Group = {
   goals_difference: number;
   points: number;
   qualified: boolean;
-}[];
+};
 
 export type Groups = {
   [key: string]: Group;

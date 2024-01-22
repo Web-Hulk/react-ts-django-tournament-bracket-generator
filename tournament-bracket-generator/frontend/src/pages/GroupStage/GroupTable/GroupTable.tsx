@@ -1,7 +1,7 @@
 import { Groups } from "../../../types";
 
 type GroupTableProps = {
-  groupsData: Groups;
+  groupsData: Groups[];
   groupName: string;
 };
 
@@ -26,11 +26,11 @@ export const GroupTable = ({ groupsData, groupName }: GroupTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {groupsData[groupName].map(
-            ({
+          {groupsData.map((groupData) => {
+            const {
               group_name,
-              position,
               player,
+              position,
               matches_played,
               wins,
               draws,
@@ -40,7 +40,8 @@ export const GroupTable = ({ groupsData, groupName }: GroupTableProps) => {
               goals_difference,
               points,
               qualified,
-            }) => (
+            } = Object.values(groupData)[0];
+            return (
               <tr key={`Group ${group_name} - ${player}`}>
                 <td>{position}</td>
                 <td>{player}</td>
@@ -54,8 +55,8 @@ export const GroupTable = ({ groupsData, groupName }: GroupTableProps) => {
                 <td>{points}</td>
                 <td>{qualified.toString()}</td>
               </tr>
-            )
-          )}
+            );
+          })}
         </tbody>
       </table>
     </div>
