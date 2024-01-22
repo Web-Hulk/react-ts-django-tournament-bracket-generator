@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Player, Tournament, Feedback, Fixture, GroupStage, RegistrationStatus
+from .models import Player, Tournament, Feedback, Fixture, GroupStage, KnockoutStage, RegistrationStatus
 
 class PlayerAdmin(admin.ModelAdmin):
   list_display = ('first_name', 'last_name', 'nick_name', 'email')
@@ -16,6 +16,9 @@ class FixtureAdmin(admin.ModelAdmin):
 class GroupStageAdmin(admin.ModelAdmin):
   list_display = ('player', 'group_name', 'position', 'matches_played', 'wins', 'draws', 'loses', 'goals_for', 'goals_against', 'goals_difference', 'points', 'qualified')
 
+class KnockoutStageAdmin(admin.ModelAdmin):
+  list_display = ('player_name', 'opponent_name', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'player_goals_2nd_leg', 'opponent_goals_2nd_leg', 'stage')
+
 class RegistrationStatusAdmin(admin.ModelAdmin):
   MAX_COUNT = 1
   
@@ -31,4 +34,5 @@ admin.site.register(Tournament, TournamentAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
 admin.site.register(Fixture, FixtureAdmin)
 admin.site.register(GroupStage, GroupStageAdmin)
+admin.site.register(KnockoutStage, KnockoutStageAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)

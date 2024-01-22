@@ -8,6 +8,7 @@ type Links = {
 const LINKS: Links[] = [
   { name: "Home", href: "" },
   { name: "Dashboard", href: "dashboard" },
+  { name: "Group Stage", href: "group-stage" },
   { name: "Matches", href: "matches" },
   { name: "Players Registration", href: "players-registration" },
   { name: "General Principles", href: "general-principles" },

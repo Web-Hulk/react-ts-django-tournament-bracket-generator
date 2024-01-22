@@ -8,6 +8,7 @@ import { Dashboard } from "./pages/Dashboard/Dashboard.tsx";
 import { Feedback } from "./pages/Feedback/Feedback.tsx";
 import { GeneralTournamentPrinciples } from "./pages/GeneralTournamentPrinciples/GeneralTournamentPrinciples.tsx";
 import { GeneralTournamentRules } from "./pages/GeneralTournamentRules/GeneralTournamentRules.tsx";
+import { GroupStage } from "./pages/GroupStage/GroupStage.tsx";
 import { Home } from "./pages/Home/Home.tsx";
 import { Matches } from "./pages/Matches/Matches.tsx";
 import { PlayersRegistration } from "./pages/PlayersRegistration/PlayersRegistration.tsx";
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: "/rules", element: <GeneralTournamentRules /> },
       { path: "/statute", element: <TournamentStatute /> },
       { path: "/prizes", element: <Prizes /> },
+      { path: "/group-stage", element: <GroupStage /> },
       { path: "/matches", element: <Matches /> },
       { path: "/feedback", element: <Feedback /> },
     ],
