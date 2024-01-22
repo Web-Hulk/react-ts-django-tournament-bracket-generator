@@ -1,4 +1,5 @@
 import { Groups } from "../../../types";
+import { GroupTableRow } from "./GroupTableRow/GroupTableRow";
 
 type GroupTableProps = {
   groupsData: Groups[];
@@ -26,37 +27,12 @@ export const GroupTable = ({ groupsData, groupName }: GroupTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {groupsData.map((groupData) => {
-            const {
-              group_name,
-              player,
-              position,
-              matches_played,
-              wins,
-              draws,
-              loses,
-              goals_for,
-              goals_against,
-              goals_difference,
-              points,
-              qualified,
-            } = Object.values(groupData)[0];
-            return (
-              <tr key={`Group ${group_name} - ${player}`}>
-                <td>{position}</td>
-                <td>{player}</td>
-                <td>{matches_played}</td>
-                <td>{wins}</td>
-                <td>{draws}</td>
-                <td>{loses}</td>
-                <td>{goals_for}</td>
-                <td>{goals_against}</td>
-                <td>{goals_difference}</td>
-                <td>{points}</td>
-                <td>{qualified.toString()}</td>
-              </tr>
-            );
-          })}
+          {groupsData.map((group, index) => (
+            <GroupTableRow
+              key={`Group ${groupName}-${index + 1}`}
+              group={group}
+            />
+          ))}
         </tbody>
       </table>
     </div>
