@@ -30,7 +30,6 @@ class GroupStageSerializer(serializers.ModelSerializer):
 
   def to_representation(self, instance):
     representation = super().to_representation(instance)
-    print(representation)
     return {representation['group_name']: representation}
   
 class CreateFeedbackSerializer(serializers.ModelSerializer):

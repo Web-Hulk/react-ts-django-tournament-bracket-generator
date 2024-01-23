@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils import timezone
 
 # Create your models here.
 
@@ -18,6 +19,8 @@ class Player(models.Model):
   last_name = models.CharField(max_length=30, verbose_name="last name")
   nick_name = models.CharField(max_length=30, unique=True, verbose_name="nickname")
   email = models.EmailField(unique=True, verbose_name="email")
+  added_to_teams_chat = models.BooleanField(default=False, verbose_name="added to Teams chat")
+  registration_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="registration date")
 
   def __str__(self):
     return f"{self.first_name} {self.last_name}"
@@ -40,7 +43,6 @@ class Fixture(models.Model):
   def __str__(self):
     return f"{self.stage}: {self.player.first_name} {self.player.last_name} {self.player_goals_1st_leg}-{self.opponent_goals_1st_leg} {self.opponent.first_name} {self.opponent.last_name}"
   
-# Add default values
 class GroupStage(models.Model):
   GROUP_NAMES = [
     ('A', 'Group A'),

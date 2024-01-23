@@ -1,8 +1,34 @@
 from django.contrib import admin, messages
+from django.http import HttpResponse
+import csv
 from .models import Player, Tournament, Feedback, Fixture, GroupStage, KnockoutStage, RegistrationStatus
 
 class PlayerAdmin(admin.ModelAdmin):
-  list_display = ('first_name', 'last_name', 'nick_name', 'email')
+  def export_as_csv(self, request, queryset):
+      field_names = ['first_name', 'last_name', 'nick_name']
+
+      field_name_mapping = {
+        'first_name': 'First Name',
+        'last_name': 'Last Name',
+        'nick_name': 'Nickname',
+      }
+
+      response = HttpResponse(
+        content_type="text/csv",
+        headers={'Content-Disposition': 'attachment; filename=tournament_players.csv'}
+      )
+      writer = csv.writer(response)
+
+      writer.writerow([field_name_mapping.get(field, field) for field in field_names])
+      for obj in queryset:
+          writer.writerow([getattr(obj, field) for field in field_names])
+
+      return response
+
+  export_as_csv.short_description = "Export Selected"
+
+  list_display = ('first_name', 'last_name', 'nick_name', 'email', 'added_to_teams_chat', 'registration_date')
+  actions = ["export_as_csv"]
 
 class TournamentAdmin(admin.ModelAdmin):
   list_display = ('name', 'date', 'location', 'number_of_players', 'type')
