@@ -17,6 +17,9 @@ class CreateTournamentSerializer(serializers.ModelSerializer):
     fields = ('name', 'date', 'location', 'number_of_players', 'type')
 
 class FixtureSerializer(serializers.ModelSerializer):
+  player = serializers.StringRelatedField()
+  opponent = serializers.StringRelatedField()
+  
   class Meta:
     model = Fixture
     fields = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'stage')

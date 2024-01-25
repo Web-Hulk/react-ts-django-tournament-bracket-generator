@@ -37,7 +37,7 @@ class FeedbackAdmin(admin.ModelAdmin):
   list_display = ('rate', 'comment')
 
 class FixtureAdmin(admin.ModelAdmin):
-  list_display = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'stage')
+  list_display = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'stage', 'group')
 
 class GroupStageAdmin(admin.ModelAdmin):
   list_display = ('player', 'group_name', 'position', 'matches_played', 'wins', 'draws', 'loses', 'goals_for', 'goals_against', 'goals_difference', 'points', 'qualified')
