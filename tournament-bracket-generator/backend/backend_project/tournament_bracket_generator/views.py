@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Player, Fixture, GroupStage, RegistrationStatus
 from .serializers import PlayerSerializer, CreatePlayerSerializer, CreateTournamentSerializer, FixtureSerializer, GroupStageSerializer, CreateFeedbackSerializer, RegistrationStatusSerializer
+from django.core.exceptions import ObjectDoesNotExist
 
 class PlayerView(generics.ListAPIView):
     queryset = Player.objects.all()
@@ -13,6 +14,21 @@ class CreatePlayerView(APIView):
     serializer_class = CreatePlayerSerializer
 
     def post(self, request):
+        email = request.data.get('email')
+        nick_name = request.data.get('nick_name')
+
+        try:
+            Player.objects.get(email=email)
+            return Response({'message': 'Player with this email is already registered'}, status=400)
+        except ObjectDoesNotExist:
+            pass
+
+        try:
+            Player.objects.get(nick_name=nick_name)
+            return Response({'message': 'Player with this nickname is already registered'}, status=400)
+        except ObjectDoesNotExist:
+            pass
+        
         serializer = self.serializer_class(data = request.data)
         if serializer.is_valid():
             serializer.save()
