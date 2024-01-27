@@ -4,7 +4,6 @@ from django.utils import timezone
 from django.db.models import Q
 
 # Create your models here.
-
 class Tournament(models.Model):
   name = models.CharField(max_length=30, verbose_name='name')
   date = models.DateField(verbose_name='date')
@@ -74,7 +73,7 @@ class GroupStage(models.Model):
       players_tuple = tuple(sorted([self.player.id, other_player.player.id]))
 
       if not Fixture.objects.filter(player_id=players_tuple[0], opponent_id=players_tuple[1]).exists():
-          Fixture.objects.create(player_id=players_tuple[0], opponent_id=players_tuple[1], stage='G', group=self.group_name)
+        Fixture.objects.create(player_id=players_tuple[0], opponent_id=players_tuple[1], stage='G', group=self.group_name)
 
 class Fixture(models.Model):
   LEVELS = [
@@ -85,7 +84,6 @@ class Fixture(models.Model):
     ('F', 'Final'),
   ]
 
-  # group = models.ForeignKey(GroupStage, on_delete=models.CASCADE, null=True, related_name='fixture_group', verbose_name='group_name')  
   group = models.CharField(max_length=1, choices=GroupStage.GROUP_NAMES, null=True, editable=False, verbose_name='group_name')
   player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_player', verbose_name='player_name')
   opponent = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_opponent', verbose_name='opponent_name')
@@ -95,6 +93,35 @@ class Fixture(models.Model):
 
   def __str__(self):
     return f"{self.stage}: {self.player.first_name} {self.player.last_name} {self.player_goals_1st_leg}-{self.opponent_goals_1st_leg} {self.opponent.first_name} {self.opponent.last_name}"
+
+  # When update the same fixture many times, I update GroupStage many times - it is wrong!
+  def save(self, *args, **kwargs):
+    is_created = self.pk is None
+    old_player_goals_for = None
+    old_opponent_goals_for = None
+
+    if not is_created:
+      old_match = Fixture.objects.get(pk=self.pk)
+      old_player_goals_for = old_match.player_goals_1st_leg
+      old_opponent_goals_for = old_match.opponent_goals_1st_leg
+
+    super().save(*args, **kwargs)
+
+    if not is_created:
+      player_record = GroupStage.objects.get(group_name=self.group, player=self.player)
+      opponent_record = GroupStage.objects.get(group_name=self.group, player=self.opponent)
+
+      # Goals For
+      player_record.goals_for = player_record.goals_for - old_player_goals_for + self.player_goals_1st_leg
+      opponent_record.goals_for = opponent_record.goals_for - old_opponent_goals_for + self.opponent_goals_1st_leg
+
+      # Goals Against
+      player_record.goals_against = player_record.goals_against - old_opponent_goals_for + self.opponent_goals_1st_leg
+      opponent_record.goals_against = opponent_record.goals_against - old_player_goals_for + self.player_goals_1st_leg
+
+      # Goals Difference
+      player_record.goals_difference = player_record.goals_for - player_record.goals_against
+      opponent_record.goals_difference = opponent_record.goals_for - opponent_record.goals_against
 
 class KnockoutStage(models.Model):
   LEVELS = [
