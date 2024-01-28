@@ -20,7 +20,6 @@ export type AutocompleteData = {
 export type Group = {
   player: string;
   group_name: string;
-  position: number;
   matches_played: number;
   wins: number;
   draws: number;

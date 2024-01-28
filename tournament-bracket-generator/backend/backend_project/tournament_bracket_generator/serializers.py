@@ -29,7 +29,7 @@ class GroupStageSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = GroupStage
-    fields = ('player', 'group_name', 'position', 'matches_played', 'wins', 'draws', 'loses', 'goals_for', 'goals_against', 'goals_difference', 'points', 'qualified')
+    fields = ('player', 'group_name', 'matches_played', 'wins', 'draws', 'loses', 'goals_for', 'goals_against', 'goals_difference', 'points', 'qualified')
 
   def to_representation(self, instance):
     representation = super().to_representation(instance)

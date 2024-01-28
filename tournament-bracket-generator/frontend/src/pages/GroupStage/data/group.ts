@@ -5,7 +5,6 @@ export const actualBackendResponse: Groups[] = [
       "A": {
           "player": "John Doe",
           "group_name": "A",
-          "position": 1,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -21,7 +20,6 @@ export const actualBackendResponse: Groups[] = [
       "A": {
           "player": "Joey Nurmageev",
           "group_name": "A",
-          "position": 2,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -37,7 +35,6 @@ export const actualBackendResponse: Groups[] = [
       "A": {
           "player": "Bob Johnson",
           "group_name": "A",
-          "position": 3,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -53,7 +50,6 @@ export const actualBackendResponse: Groups[] = [
       "A": {
           "player": "Frank Miller",
           "group_name": "A",
-          "position": 4,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -69,7 +65,6 @@ export const actualBackendResponse: Groups[] = [
       "B": {
           "player": "Jane Doe",
           "group_name": "B",
-          "position": 1,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -85,7 +80,6 @@ export const actualBackendResponse: Groups[] = [
       "B": {
           "player": "Frank Ocean",
           "group_name": "B",
-          "position": 2,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -101,7 +95,6 @@ export const actualBackendResponse: Groups[] = [
       "B": {
           "player": "Charlie Williams",
           "group_name": "B",
-          "position": 3,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -117,7 +110,6 @@ export const actualBackendResponse: Groups[] = [
       "B": {
           "player": "Grace Davis",
           "group_name": "B",
-          "position": 4,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -133,7 +125,6 @@ export const actualBackendResponse: Groups[] = [
       "C": {
           "player": "Rick Dolley",
           "group_name": "C",
-          "position": 1,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -149,7 +140,6 @@ export const actualBackendResponse: Groups[] = [
       "C": {
           "player": "Brad Pitt",
           "group_name": "C",
-          "position": 2,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -165,7 +155,6 @@ export const actualBackendResponse: Groups[] = [
       "C": {
           "player": "David Brown",
           "group_name": "C",
-          "position": 3,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -181,7 +170,6 @@ export const actualBackendResponse: Groups[] = [
       "C": {
           "player": "Heidi Garcia",
           "group_name": "C",
-          "position": 4,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -197,7 +185,6 @@ export const actualBackendResponse: Groups[] = [
       "D": {
           "player": "Morty Ricky",
           "group_name": "D",
-          "position": 1,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -213,7 +200,6 @@ export const actualBackendResponse: Groups[] = [
       "D": {
           "player": "Alice Smith",
           "group_name": "D",
-          "position": 2,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -229,7 +215,6 @@ export const actualBackendResponse: Groups[] = [
       "D": {
           "player": "Eve Jones",
           "group_name": "D",
-          "position": 3,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,
@@ -245,7 +230,6 @@ export const actualBackendResponse: Groups[] = [
       "D": {
           "player": "Ivan Rodriguez",
           "group_name": "D",
-          "position": 4,
           "matches_played": 0,
           "wins": 0,
           "draws": 0,

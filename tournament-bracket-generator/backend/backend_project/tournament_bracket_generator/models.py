@@ -36,7 +36,6 @@ class GroupStage(models.Model):
 
   player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='group_player', verbose_name='player')
   group_name = models.CharField(max_length=1, choices=GROUP_NAMES, verbose_name='group name')
-  position = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(4)], verbose_name='position')
   matches_played = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(3)], verbose_name='matches played')
   wins = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(3)], verbose_name='wins')
   draws = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(3)], verbose_name='draws')

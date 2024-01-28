@@ -7,7 +7,6 @@ type GroupTableRowProps = {
 export const GroupTableRow = ({ group }: GroupTableRowProps) => {
   const {
     player,
-    position,
     matches_played,
     wins,
     draws,
@@ -21,7 +20,6 @@ export const GroupTableRow = ({ group }: GroupTableRowProps) => {
 
   return (
     <tr>
-      <td>{position}</td>
       <td>{player}</td>
       <td>{matches_played}</td>
       <td>{wins}</td>
