@@ -37,7 +37,7 @@ class FeedbackAdmin(admin.ModelAdmin):
   list_display = ('rate', 'comment')
 
 class FixtureAdmin(admin.ModelAdmin):
-  list_display = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'stage', 'group')
+  list_display = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'stage', 'group', 'status')
 
 class GroupStageAdmin(admin.ModelAdmin):
   list_display = ('player', 'group_name', 'position', 'matches_played', 'wins', 'draws', 'loses', 'goals_for', 'goals_against', 'goals_difference', 'points', 'qualified')
@@ -60,6 +60,18 @@ class GroupStageAdmin(admin.ModelAdmin):
     #   return
 
     super().save_model(request, obj, form, change)
+
+  # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+  #   if db_field.name == 'player':
+  #     # kwargs['queryset'] = Player.objects.filter(first_name=request.first_name, last_name=request.last_name)
+  #     kwargs['queryset'] = Player.objects.filter(group_player__isnull=True)
+  #   return super().formfield_for_foreignkey(db_field, request, **kwargs)
+  
+  # def has_add_permission(self, request):
+  #   if self.model.objects.count() >= Player.objects.all().count():
+  #     return False
+  #   return super().has_add_permission(request)
+
 
 class KnockoutStageAdmin(admin.ModelAdmin):
   list_display = ('player_name', 'opponent_name', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'player_goals_2nd_leg', 'opponent_goals_2nd_leg', 'stage')

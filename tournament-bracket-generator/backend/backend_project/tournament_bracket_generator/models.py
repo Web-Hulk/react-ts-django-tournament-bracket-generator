@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models import Q
 
@@ -47,7 +48,6 @@ class GroupStage(models.Model):
   qualified = models.BooleanField(verbose_name='qualified')
 
   def __str__(self):
-    # return f"Group {self.group_name}: {self.player.first_name} {self.player.last_name}"
     return f"{self.group_name}"
   
   def save(self, *args, **kwargs):
@@ -84,17 +84,31 @@ class Fixture(models.Model):
     ('F', 'Final'),
   ]
 
-  group = models.CharField(max_length=1, choices=GroupStage.GROUP_NAMES, null=True, editable=False, verbose_name='group_name')
-  player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_player', verbose_name='player_name')
-  opponent = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_opponent', verbose_name='opponent_name')
-  player_goals_1st_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='player goals 1st leg')
-  opponent_goals_1st_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='opponent goals 1st leg')
+  MATCH_STATUS = [
+    ('NS', 'Not Started'),
+    ('IP', 'In Progress'),
+    ('CO', 'Completed'),
+  ]
+
+  group = models.CharField(max_length=1, choices=GroupStage.GROUP_NAMES, null=True, editable=False, verbose_name='group name')
+  player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_player', verbose_name='player name')
+  opponent = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_opponent', verbose_name='opponent name')
+  player_goals_1st_leg = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)], verbose_name='player goals 1st leg')
+  opponent_goals_1st_leg = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)], verbose_name='opponent goals 1st leg')
   stage = models.CharField(max_length=2, choices=LEVELS, verbose_name='stage')
+  status = models.CharField(max_length=2, choices=MATCH_STATUS, default='NS', verbose_name='status')
 
   def __str__(self):
     return f"{self.stage}: {self.player.first_name} {self.player.last_name} {self.player_goals_1st_leg}-{self.opponent_goals_1st_leg} {self.opponent.first_name} {self.opponent.last_name}"
 
-  # When update the same fixture many times, I update GroupStage many times - it is wrong!
+  def clean(self):
+    if self.status == 'NS' and (self.player_goals_1st_leg is not None or self.opponent_goals_1st_leg is not None):
+      raise ValidationError("Scores must be None for a match that has Not Started.")
+    elif self.status in ['IP', 'CO'] and (self.player_goals_1st_leg is None or self.opponent_goals_1st_leg is None):
+      raise ValidationError("Scores mustn't be None for a match In Progress or Completed.")
+    
+    super().clean()
+
   def save(self, *args, **kwargs):
     is_created = self.pk is None
     old_player_goals_for = None
@@ -102,8 +116,9 @@ class Fixture(models.Model):
 
     if not is_created:
       old_match = Fixture.objects.get(pk=self.pk)
-      old_player_goals_for = old_match.player_goals_1st_leg
-      old_opponent_goals_for = old_match.opponent_goals_1st_leg
+      old_player_goals_for = old_match.player_goals_1st_leg or 0
+      old_opponent_goals_for = old_match.opponent_goals_1st_leg or 0
+      old_status = old_match.status
 
     super().save(*args, **kwargs)
 
@@ -111,17 +126,87 @@ class Fixture(models.Model):
       player_record = GroupStage.objects.get(group_name=self.group, player=self.player)
       opponent_record = GroupStage.objects.get(group_name=self.group, player=self.opponent)
 
+      # Matches Played
+      if (old_status == 'NS' and (self.status in ['IP', 'CO'])):
+        player_record.matches_played += 1
+        opponent_record.matches_played += 1
+
+      if ((old_status in ['IP', 'CO']) and self.status == 'NS'):
+        player_record.matches_played -= 1
+        opponent_record.matches_played -= 1
+
+      player_goals_1st_leg = self.player_goals_1st_leg or 0
+      opponent_goals_1st_leg = self.opponent_goals_1st_leg or 0
+
       # Goals For
-      player_record.goals_for = player_record.goals_for - old_player_goals_for + self.player_goals_1st_leg
-      opponent_record.goals_for = opponent_record.goals_for - old_opponent_goals_for + self.opponent_goals_1st_leg
+      player_record.goals_for = player_record.goals_for - old_player_goals_for + player_goals_1st_leg
+      opponent_record.goals_for = opponent_record.goals_for - old_opponent_goals_for + opponent_goals_1st_leg
 
       # Goals Against
-      player_record.goals_against = player_record.goals_against - old_opponent_goals_for + self.opponent_goals_1st_leg
-      opponent_record.goals_against = opponent_record.goals_against - old_player_goals_for + self.player_goals_1st_leg
+      player_record.goals_against = player_record.goals_against - old_opponent_goals_for + opponent_goals_1st_leg
+      opponent_record.goals_against = opponent_record.goals_against - old_player_goals_for + player_goals_1st_leg
 
       # Goals Difference
       player_record.goals_difference = player_record.goals_for - player_record.goals_against
       opponent_record.goals_difference = opponent_record.goals_for - opponent_record.goals_against
+
+      # Wins | Draws | Loses | Points
+      if ((old_status in ['IP', 'CO']) and self.status == 'NS'):
+        if old_player_goals_for > old_opponent_goals_for:
+          if player_record.wins > 0:
+            player_record.wins -= 1
+          if player_record.points > 0:
+            player_record.points -= 3
+          if opponent_record.loses > 0:
+            opponent_record.loses -= 1
+        elif old_player_goals_for < old_opponent_goals_for:
+          if opponent_record.wins > 0:
+            opponent_record.wins -= 1
+          if opponent_record.points > 0:
+            opponent_record.points -= 3
+          if player_record.loses > 0:
+            player_record.loses -= 1
+        else:
+          if player_record.draws > 0:
+            player_record.draws -= 1
+          if player_record.points > 0:
+            player_record.points -= 1
+          if opponent_record.draws > 0:
+            opponent_record.draws -= 1
+          if opponent_record.points > 0:
+            opponent_record.points -= 1
+
+      if (old_status == 'NS' and (self.status in ['IP', 'CO'])):
+        if self.player_goals_1st_leg > self.opponent_goals_1st_leg:
+          player_record.wins += 1
+          player_record.points += 3
+
+          opponent_record.loses += 1
+        elif self.player_goals_1st_leg > self.opponent_goals_1st_leg:
+          opponent_record.wins += 1
+          opponent_record.points += 3
+
+          player_record.loses += 1
+        else:
+          player_record.draws += 1
+          player_record.points += 1
+
+          opponent_record.draws += 1
+          opponent_record.points += 1
+
+      # Qualified
+      players = GroupStage.objects.filter(group_name=self.group).order_by('-points', '-goals_difference', '-goals_for', '-goals_against')
+      top_players = [players[i] for i in range(len(players))]
+
+      if len(set(top_players[:4])) == 1:
+        pass
+      else:
+        for i, player in enumerate(players):
+          player.qualified = i < 2
+          player.save()
+
+      player_record.save()
+      opponent_record.save()
 
 class KnockoutStage(models.Model):
   LEVELS = [

@@ -22,7 +22,7 @@ class FixtureSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Fixture
-    fields = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'group', 'stage')
+    fields = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'group', 'stage', 'status')
 
 class GroupStageSerializer(serializers.ModelSerializer):
   player = serializers.StringRelatedField()
