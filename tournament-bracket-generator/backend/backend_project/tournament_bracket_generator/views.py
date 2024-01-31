@@ -2,9 +2,18 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Player, Fixture, GroupStage, RegistrationStatus
-from .serializers import PlayerSerializer, CreatePlayerSerializer, CreateTournamentSerializer, FixtureSerializer, GroupStageSerializer, CreateFeedbackSerializer, RegistrationStatusSerializer
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from .models import Player, Fixture, GroupStage, RegistrationStatus
+from .serializers import PlayerSerializer, CreatePlayerSerializer, FixtureSerializer, GroupStageSerializer, CreateFeedbackSerializer, RegistrationStatusSerializer
+
+class PlayerDetailsView(generics.ListAPIView):
+    serializer_class = FixtureSerializer
+
+    def get_queryset(self):
+        player = get_object_or_404(Player, id=self.kwargs['id'])
+        return Fixture.objects.filter(Q(player=player) | Q(opponent=player))
 
 class PlayerView(generics.ListAPIView):
     queryset = Player.objects.all()
@@ -16,6 +25,12 @@ class CreatePlayerView(APIView):
     def post(self, request):
         email = request.data.get('email')
         nick_name = request.data.get('nick_name')
+
+        # if get_object_or_404(Player, email=email):
+        #     return Response({'message': f'{email} is alread registered'}, status=400)
+
+        # if get_object_or_404(Player, nick_name=nick_name):
+        #     return Response({'message': f'{nick_name} is already registered'}, status=400)
 
         try:
             Player.objects.get(email=email)
@@ -29,16 +44,6 @@ class CreatePlayerView(APIView):
         except ObjectDoesNotExist:
             pass
         
-        serializer = self.serializer_class(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = 201)
-        return Response(serializer.errors, status = 400)
-    
-class CreateTournamentView(APIView):
-    serializer_class = CreateTournamentSerializer
-
-    def post(self, request):
         serializer = self.serializer_class(data = request.data)
         if serializer.is_valid():
             serializer.save()

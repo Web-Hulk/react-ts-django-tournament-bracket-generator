@@ -5,16 +5,6 @@ from django.utils import timezone
 from django.db.models import Q
 
 # Create your models here.
-class Tournament(models.Model):
-  name = models.CharField(max_length=30, verbose_name='name')
-  date = models.DateField(verbose_name='date')
-  location = models.CharField(max_length=30, verbose_name="location")
-  number_of_players = models.IntegerField(validators=[MinValueValidator(1)], verbose_name='number of players')
-  type = models.CharField(max_length=30, verbose_name="type")
-
-  def __str__(self):
-    return f"{self.name}"
-  
 class Player(models.Model):
   first_name = models.CharField(max_length=30, verbose_name="first name")
   last_name = models.CharField(max_length=30, verbose_name="last name")
@@ -47,7 +37,7 @@ class GroupStage(models.Model):
   qualified = models.BooleanField(verbose_name='qualified')
 
   def __str__(self):
-    return f"{self.group_name}"
+    return f"Group: {self.group_name} - {self.player}"
   
   def save(self, *args, **kwargs):
     # Check if the instance is being created or updated
@@ -63,9 +53,16 @@ class GroupStage(models.Model):
     if old_group_name and old_group_name != self.group_name:
       Fixture.objects.filter(Q(player=self.player) | Q(opponent=self.player), group=old_group_name).delete()
 
-    self.create_fixture()
+    self.create_group_stage_fixture()
+    
+    # Create Knockout Fixtures - Not working when e.g., final match removed
+    knockout_stages = ['QF', 'SF', '3P', 'F']
+    fixtures = Fixture.objects.filter(stage__in=knockout_stages)
+    if not fixtures.exists():
+      self.create_knockout_stage_fixture()
 
-  def create_fixture(self):
+
+  def create_group_stage_fixture(self):
     other_players = GroupStage.objects.filter(group_name=self.group_name).exclude(pk=self.pk)
 
     for other_player in other_players:
@@ -73,6 +70,19 @@ class GroupStage(models.Model):
 
       if not Fixture.objects.filter(player_id=players_tuple[0], opponent_id=players_tuple[1]).exists():
         Fixture.objects.create(player_id=players_tuple[0], opponent_id=players_tuple[1], stage='G', group=self.group_name)
+
+  # You should check if the Knockout Stages exists to not create duplicated instances
+  def create_knockout_stage_fixture(self):
+    print('create_knockout_stage_fixture')
+    Fixture.objects.create(player=Player.objects.get(first_name='Ivan', last_name='Rodriguez'), opponent=Player.objects.get(first_name='Heidi', last_name='Garcia'), stage='QF')
+    Fixture.objects.create(player=Player.objects.get(first_name='Grace', last_name='Davis'), opponent=Player.objects.get(first_name='Frank', last_name='Miller'), stage='QF')
+    Fixture.objects.create(player=Player.objects.get(first_name='Eve', last_name='Jones'), opponent=Player.objects.get(first_name='David', last_name='Brown'), stage='QF')
+    Fixture.objects.create(player=Player.objects.get(first_name='Charlie', last_name='Williams'), opponent=Player.objects.get(first_name='Bob', last_name='Johnson'), stage='QF')
+
+    Fixture.objects.create(player=Player.objects.get(first_name='Alice', last_name='Smith'), opponent=Player.objects.get(first_name='Brad', last_name='Pitt'), stage='SF')
+    Fixture.objects.create(player=Player.objects.get(first_name='Frank', last_name='Ocean'), opponent=Player.objects.get(first_name='Joey', last_name='Nurmageev'), stage='SF')
+    Fixture.objects.create(player=Player.objects.get(first_name='Morty', last_name='Ricky'), opponent=Player.objects.get(first_name='Rick', last_name='Dolley'), stage='3P')
+    Fixture.objects.create(player=Player.objects.get(first_name='Jane', last_name='Doe'), opponent=Player.objects.get(first_name='John', last_name='Doe'), stage='F')
 
 class Fixture(models.Model):
   LEVELS = [
@@ -89,16 +99,19 @@ class Fixture(models.Model):
     ('CO', 'Completed'),
   ]
 
-  group = models.CharField(max_length=1, choices=GroupStage.GROUP_NAMES, null=True, editable=False, verbose_name='group name')
+  group = models.CharField(max_length=1, choices=GroupStage.GROUP_NAMES, null=True, verbose_name='group name')
   player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_player', verbose_name='player name')
   opponent = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='fixture_opponent', verbose_name='opponent name')
   player_goals_1st_leg = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)], verbose_name='player goals 1st leg')
   opponent_goals_1st_leg = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)], verbose_name='opponent goals 1st leg')
+  player_goals_2nd_leg = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)], verbose_name='player goals 2nd leg')
+  opponent_goals_2nd_leg = models.IntegerField(default=None, blank=True, null=True, validators=[MinValueValidator(0)], verbose_name='opponent goals 2nd leg')
   stage = models.CharField(max_length=2, choices=LEVELS, verbose_name='stage')
   status = models.CharField(max_length=2, choices=MATCH_STATUS, default='NS', verbose_name='status')
+  match_number = models.IntegerField(unique=True, null=True, verbose_name='match number')
 
   def __str__(self):
-    return f"{self.stage}: {self.player.first_name} {self.player.last_name} {self.player_goals_1st_leg}-{self.opponent_goals_1st_leg} {self.opponent.first_name} {self.opponent.last_name}"
+    return f"{self.player.first_name} {self.player.last_name} - {self.opponent.first_name} {self.opponent.last_name}"
 
   def clean(self):
     if self.status == 'NS' and (self.player_goals_1st_leg is not None or self.opponent_goals_1st_leg is not None):
@@ -121,7 +134,12 @@ class Fixture(models.Model):
 
     super().save(*args, **kwargs)
 
-    if not is_created:
+    knockout_game_exists = Fixture.objects.filter(stage__in=['QF', 'SF', '3P', 'F']).exists()
+    if knockout_game_exists:
+      knockout_game = Fixture.objects.get(pk=self.pk)
+      print('knockout_game: ', knockout_game)
+
+    if self.stage == 'G' and not is_created:
       player_record = GroupStage.objects.get(group_name=self.group, player=self.player)
       opponent_record = GroupStage.objects.get(group_name=self.group, player=self.opponent)
 
@@ -193,38 +211,8 @@ class Fixture(models.Model):
           opponent_record.draws += 1
           opponent_record.points += 1
 
-      # Qualified
-      players = GroupStage.objects.filter(group_name=self.group).order_by('-points', '-goals_difference', '-goals_for', '-goals_against')
-      top_players = [players[i] for i in range(len(players))]
-
-      if len(set(top_players[:4])) == 1:
-        pass
-      else:
-        for i, player in enumerate(players):
-          player.qualified = i < 2
-          player.save()
-
       player_record.save()
       opponent_record.save()
-
-class KnockoutStage(models.Model):
-  LEVELS = [
-    ('QF', 'Quarter-final'),
-    ('SF', 'Semi-final'),
-    ('3P', '3rd place'),
-    ('F', 'Final'),
-  ]
-
-  player_name = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='knockout_player', verbose_name='player_name')
-  opponent_name = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='knockout_opponent', verbose_name='opponent_name')
-  player_goals_1st_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='player goals 1st leg')
-  opponent_goals_1st_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='opponent goals 1st leg')
-  player_goals_2nd_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], null=True, blank=True, verbose_name='player goals 2nd leg')
-  opponent_goals_2nd_leg = models.IntegerField(default=0, validators=[MinValueValidator(0)], null=True, blank=True, verbose_name='opponent goals 2nd leg')
-  stage = models.CharField(max_length=2, choices=LEVELS, verbose_name='stage')
-
-  def __str__(self):
-    return f"{self.stage}: {self.player_name.first_name} {self.player_name.last_name} vs {self.opponent_name.first_name} {self.opponent_name.last_name}"
 
 class Feedback(models.Model):
   rate = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name='rate')

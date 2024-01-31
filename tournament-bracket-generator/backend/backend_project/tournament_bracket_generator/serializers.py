@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Player, Tournament, Fixture, GroupStage, Feedback, RegistrationStatus
+from .models import Player, Fixture, GroupStage, Feedback, RegistrationStatus
 
 class PlayerSerializer(serializers.ModelSerializer):
   class Meta:
@@ -11,21 +11,16 @@ class CreatePlayerSerializer(serializers.ModelSerializer):
     model = Player
     fields = ('first_name', 'last_name', 'nick_name', 'email')
 
-class CreateTournamentSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = Tournament
-    fields = ('name', 'date', 'location', 'number_of_players', 'type')
-
 class FixtureSerializer(serializers.ModelSerializer):
   player = serializers.StringRelatedField()
   opponent = serializers.StringRelatedField()
   
   class Meta:
     model = Fixture
-    fields = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'group', 'stage', 'status')
+    fields = ('match_number', 'player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'player_goals_2nd_leg', 'opponent_goals_2nd_leg', 'group', 'stage', 'status')
 
 class GroupStageSerializer(serializers.ModelSerializer):
-  player = serializers.StringRelatedField()
+  player = PlayerSerializer()
 
   class Meta:
     model = GroupStage

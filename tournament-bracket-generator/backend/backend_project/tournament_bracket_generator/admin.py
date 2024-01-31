@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django.http import HttpResponse
 import csv
-from .models import Player, Tournament, Feedback, Fixture, GroupStage, KnockoutStage, RegistrationStatus
+from .models import Player, Feedback, Fixture, GroupStage, RegistrationStatus
 
 class PlayerAdmin(admin.ModelAdmin):
   def export_as_csv(self, request, queryset):
@@ -28,29 +28,45 @@ class PlayerAdmin(admin.ModelAdmin):
   export_as_csv.short_description = "Export Selected"
 
   list_display = ('first_name', 'last_name', 'nick_name', 'email', 'added_to_teams_chat', 'registration_date')
+  list_filter = ('added_to_teams_chat',)
+  search_fields = ('first_name', 'last_name', 'nick_name', 'email')
+  readonly_fields = ('registration_date',)
   actions = ["export_as_csv"]
-
-class TournamentAdmin(admin.ModelAdmin):
-  list_display = ('name', 'date', 'location', 'number_of_players', 'type')
+  ordering = ('-registration_date',)
 
 class FeedbackAdmin(admin.ModelAdmin):
   list_display = ('rate', 'comment')
+  list_filter = ('rate',)
 
 class FixtureAdmin(admin.ModelAdmin):
-  list_display = ('player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'stage', 'group', 'status')
+  list_display = ('match_number', 'player', 'opponent', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'player_goals_2nd_leg', 'opponent_goals_2nd_leg', 'stage', 'group', 'status')
+  list_filter = ('stage', 'group', 'status', 'player', 'opponent')
+  search_fields = ('player__first_name', 'player__last_name', 'opponent__first_name', 'opponent__last_name', 'match_number')
+  fields = ['match_number', 'stage', 'group', ('player', 'player_goals_1st_leg', 'player_goals_2nd_leg'), ('opponent', 'opponent_goals_1st_leg', 'opponent_goals_2nd_leg'), 'status']
+
+  def get_fields(self, request, obj=None):
+    fields = super().get_fields(request, obj)
+
+    if obj and obj.stage == 'G':
+      fields = ['match_number', 'stage', 'group', ('player', 'player_goals_1st_leg'), ('opponent', 'opponent_goals_1st_leg'), 'status']
+      
+    return fields
 
 class GroupStageAdmin(admin.ModelAdmin):
   list_display = ('player', 'group_name', 'matches_played', 'wins', 'draws', 'loses', 'goals_for', 'goals_against', 'goals_difference', 'points', 'qualified')
+  list_filter = ('group_name', 'qualified')
+  search_fields = ('player__first_name', 'player__last_name')
+  fields = ['group_name', 'player', 'matches_played', ('wins', 'draws', 'loses'), ('goals_for', 'goals_against', 'goals_difference'), 'points', 'qualified']
 
   def save_model(self, request, obj, form, change):
     if GroupStage.objects.filter(group_name=obj.group_name).exclude(id=obj.id).count() >= 4:
       messages.set_level(request, messages.ERROR)
-      messages.error(request, "Can't assign more than 4 people to one group")
+      messages.error(request, "Group {group_name} already has 4 players. Can't assign more players to this group.")
       return
     
     if GroupStage.objects.filter(player=obj.player).exclude(id=obj.id).exists():
       messages.set_level(request, messages.ERROR)
-      messages.error(request, "Can't assign 1 player to more than 1 group")
+      messages.error(request, "Player {obj.player} is already assigned to a group. Can't assign this player to more than one group.")
       return
 
     super().save_model(request, obj, form, change)
@@ -66,10 +82,6 @@ class GroupStageAdmin(admin.ModelAdmin):
   #     return False
   #   return super().has_add_permission(request)
 
-
-class KnockoutStageAdmin(admin.ModelAdmin):
-  list_display = ('player_name', 'opponent_name', 'player_goals_1st_leg', 'opponent_goals_1st_leg', 'player_goals_2nd_leg', 'opponent_goals_2nd_leg', 'stage')
-
 class RegistrationStatusAdmin(admin.ModelAdmin):
   MAX_COUNT = 1
   
@@ -78,12 +90,9 @@ class RegistrationStatusAdmin(admin.ModelAdmin):
       return False
     return super().has_add_permission(request)
 
-
 # Register your models here.
 admin.site.register(Player, PlayerAdmin)
-admin.site.register(Tournament, TournamentAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
 admin.site.register(Fixture, FixtureAdmin)
 admin.site.register(GroupStage, GroupStageAdmin)
-admin.site.register(KnockoutStage, KnockoutStageAdmin)
 admin.site.register(RegistrationStatus, RegistrationStatusAdmin)

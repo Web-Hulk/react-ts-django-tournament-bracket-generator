@@ -26,7 +26,6 @@ SECRET_KEY = 'django-insecure-tb)1nai%(m9*yn&&#szb2dky@f9sxapq$!^5o_#6-0$bbvyl0k
 DEBUG = True
 ALLOWED_HOSTS = []
 
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,7 +56,7 @@ CORS_ALLOWED_ORIGINS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 16,
+    'PAGE_SIZE': 100,
 }
 
 ROOT_URLCONF = 'backend_project.urls'
