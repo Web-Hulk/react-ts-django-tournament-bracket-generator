@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Groups } from "../../../../types";
 
 type GroupTableRowProps = {
@@ -20,7 +21,11 @@ export const GroupTableRow = ({ group }: GroupTableRowProps) => {
 
   return (
     <tr>
-      <td>{player}</td>
+      <td>
+        <Link to={`/player-details/${player.id}`}>
+          {player.first_name} {player.last_name}
+        </Link>
+      </td>
       <td>{matches_played}</td>
       <td>{wins}</td>
       <td>{draws}</td>

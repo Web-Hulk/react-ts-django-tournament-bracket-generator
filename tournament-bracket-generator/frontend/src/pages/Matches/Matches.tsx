@@ -9,8 +9,18 @@ interface FixturesDTO {
   stage: string;
 }
 
+const FILTER_BUTTONS = [
+  { name: "All", value: "" },
+  { name: "Group", value: "G" },
+  { name: "Quarter-finals", value: "QF" },
+  { name: "Semi-finals", value: "SF" },
+  { name: "3rd place", value: "3P" },
+  { name: "Final", value: "F" },
+];
+
 export const Matches = () => {
   const [fixtures, setFixtures] = useState<FixturesDTO[]>([]);
+  const [filteredFixtures, setFilteredFixtures] = useState<FixturesDTO[]>([]);
 
   useEffect(() => {
     axios
@@ -18,17 +28,41 @@ export const Matches = () => {
       .then((response) => {
         console.log("Fixtures: ", response.data.results);
         setFixtures(response.data.results);
+        setFilteredFixtures(response.data.results);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
+  const filterMatchesByStage = (stage: string) => {
+    if (stage) {
+      const filterMatchesByStage = fixtures.filter(
+        (fixture) => fixture.stage === stage
+      );
+      setFilteredFixtures(filterMatchesByStage);
+    } else {
+      setFilteredFixtures(fixtures);
+    }
+  };
+
   return (
     <div>
       <h1>Matches</h1>
 
-      {fixtures.map(
+      <div>
+        {FILTER_BUTTONS.map(({ name, value }) => (
+          <button
+            key={`Filter - ${name}`}
+            type="button"
+            onClick={() => filterMatchesByStage(value)}
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+
+      {filteredFixtures.map(
         (
           {
             player,

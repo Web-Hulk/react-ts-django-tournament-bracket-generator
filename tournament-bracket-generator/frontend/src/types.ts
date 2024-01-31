@@ -18,7 +18,7 @@ export type AutocompleteData = {
 
 // GroupStage
 export type Group = {
-  player: string;
+  player: PlayerDTO;
   group_name: string;
   matches_played: number;
   wins: number;

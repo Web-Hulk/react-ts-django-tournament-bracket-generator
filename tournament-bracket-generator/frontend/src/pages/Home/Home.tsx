@@ -1,8 +1,5 @@
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import "./App.scss";
-
 import { Link } from "react-router-dom";
+import { FAQ } from "../../components/FAQ/FAQ";
 
 export const Home = () => {
   return (
@@ -36,6 +33,8 @@ export const Home = () => {
           </p>
           <Link to={"/login"}>Start Now</Link>
         </section>
+
+        <FAQ />
       </main>
 
       <footer>© 2024 FC 24 Tournament Bracket Generator</footer>

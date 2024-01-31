@@ -32,8 +32,8 @@ export const GeneralTournamentPrinciples = () => {
           thirsty - snacks and drinks are included!
         </li>
         <li>
-          <strong>Registration:</strong> Please register via our online form
-          {/* [LINK]. */}[<Link to="/players-registration">LINK</Link>].
+          <strong>Registration:</strong> Please register via our online form [
+          <Link to="/players-registration">LINK</Link>].
         </li>
         <li>
           <strong>Manager Approval:</strong> If your schedule extends beyond

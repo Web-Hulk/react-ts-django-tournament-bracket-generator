@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 type Links = {
@@ -7,28 +9,46 @@ type Links = {
 
 const LINKS: Links[] = [
   { name: "Home", href: "" },
-  { name: "Dashboard", href: "dashboard" },
+  // { name: "Dashboard", href: "dashboard" },
   { name: "Group Stage", href: "group-stage" },
   { name: "Matches", href: "matches" },
   { name: "Players Registration", href: "players-registration" },
-  { name: "General Principles", href: "general-principles" },
-  { name: "Rules", href: "rules" },
-  { name: "Statute", href: "statute" },
-  { name: "Prizes", href: "prizes" },
+  { name: "Tournament Info", href: "tournament-info" },
   { name: "Feedback", href: "feedback" },
+
   // { name: "Login", href: "login" },
   // { name: "Registration", href: "registration" },
 ];
 
 export const Sidebar = () => {
+  const [isRegistrationOpened, setIsRegistrationOpened] =
+    useState<boolean>(true);
+
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/registration-status/").then((response) => {
+      setIsRegistrationOpened(response.data.results[0].status);
+    });
+  }, []);
+
   return (
     <div>
       <ul>
-        {LINKS.map(({ name, href }) => (
-          <li key={`Link name - ${name}`}>
-            <Link to={`/${href}`}>{name}</Link>
-          </li>
-        ))}
+        {LINKS.map(({ name, href }) => {
+          if (
+            isRegistrationOpened &&
+            (name === "Group Stage" ||
+              name === "Matches" ||
+              name === "Feedback")
+          ) {
+            null;
+          } else {
+            return (
+              <li key={`Link name - ${name}`}>
+                <Link to={`/${href}`}>{name}</Link>
+              </li>
+            );
+          }
+        })}
       </ul>
     </div>
   );

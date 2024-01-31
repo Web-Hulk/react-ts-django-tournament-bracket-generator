@@ -6,14 +6,12 @@ import { Layout } from "./components/Layout/Layout.tsx";
 import "./index.scss";
 import { Dashboard } from "./pages/Dashboard/Dashboard.tsx";
 import { Feedback } from "./pages/Feedback/Feedback.tsx";
-import { GeneralTournamentPrinciples } from "./pages/GeneralTournamentPrinciples/GeneralTournamentPrinciples.tsx";
-import { GeneralTournamentRules } from "./pages/GeneralTournamentRules/GeneralTournamentRules.tsx";
 import { GroupStage } from "./pages/GroupStage/GroupStage.tsx";
 import { Home } from "./pages/Home/Home.tsx";
 import { Matches } from "./pages/Matches/Matches.tsx";
+import { PlayerDetails } from "./pages/PlayerDetails/PlayerDetails.tsx";
 import { PlayersRegistration } from "./pages/PlayersRegistration/PlayersRegistration.tsx";
-import { Prizes } from "./pages/Prizes/Prizes.tsx";
-import { TournamentStatute } from "./pages/TournamentStatute/TournamentStatute.tsx";
+import { TournamentInfo } from "./pages/TournamentInfo/TournamentInfo.tsx";
 
 const router = createBrowserRouter([
   {
@@ -29,15 +27,12 @@ const router = createBrowserRouter([
       // { path: "/verification", element: <Verification /> },
       // { path: "/forgotpassword", element: <ForgotPassword /> },
       { path: "/dashboard", element: <Dashboard /> },
-      // { path: "/create-tournament", element: <TournamentCreationForm /> },
-      { path: "/players-registration", element: <PlayersRegistration /> },
-      { path: "/general-principles", element: <GeneralTournamentPrinciples /> },
-      { path: "/rules", element: <GeneralTournamentRules /> },
-      { path: "/statute", element: <TournamentStatute /> },
-      { path: "/prizes", element: <Prizes /> },
       { path: "/group-stage", element: <GroupStage /> },
       { path: "/matches", element: <Matches /> },
+      { path: "/players-registration", element: <PlayersRegistration /> },
+      { path: "/tournament-info", element: <TournamentInfo /> },
       { path: "/feedback", element: <Feedback /> },
+      { path: "/player-details/:id", element: <PlayerDetails /> },
     ],
   },
 ]);

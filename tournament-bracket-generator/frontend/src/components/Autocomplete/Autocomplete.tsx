@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { AutocompleteData } from "../../types";
+import { Link } from "react-router-dom";
 
 type AutocompleteProps = {
   autocompleteData: AutocompleteData;
@@ -26,7 +27,9 @@ export const Autocomplete = ({
           {autocompleteData.suggestionsList.map(
             ({ id, first_name, last_name, nick_name }) => (
               <li key={id}>
-                {first_name} {last_name} ({nick_name})
+                <Link to={`/player-details/${id}`}>
+                  {first_name} {last_name} ({nick_name})
+                </Link>
               </li>
             )
           )}
