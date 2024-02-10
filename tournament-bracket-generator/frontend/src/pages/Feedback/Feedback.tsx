@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import "./Feedback.scss";
 
 export const Feedback = () => {
   const [rateNumber, setRateNumber] = useState<number>(0);
@@ -20,6 +22,15 @@ export const Feedback = () => {
   };
 
   const handleSubmit = () => {
+    axios
+      .post("http://127.0.0.1:8000/feedback/", {
+        rate: rateNumber,
+        comment,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+
     setIsFeedbackSubmitted(true);
   };
 
@@ -43,6 +54,7 @@ export const Feedback = () => {
               <button
                 key={`Rate - ${value}`}
                 onClick={() => handleRateButton(value)}
+                className={`button ${value === rateNumber ? "active" : ""}`}
               >
                 {value}
               </button>
@@ -50,16 +62,20 @@ export const Feedback = () => {
           </div>
 
           <textarea name="comment" value={comment} onChange={handleComment} />
-          {/* Add counter to inform user that maximum amount of words is e.g., 500 - I want to make it custom, similar to Twitter */}
+          {/* I want to make it custom, similar to Twitter! */}
           <span>{numberOfWordsInTextarea}/500</span>
 
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={!rateNumber || !comment}
+            disabled={!rateNumber || !comment || numberOfWordsInTextarea > 500}
           >
             Submit
           </button>
+
+          {numberOfWordsInTextarea > 500 ? (
+            <p>Too many letters: {numberOfWordsInTextarea - 500}</p>
+          ) : null}
         </>
       )}
     </div>

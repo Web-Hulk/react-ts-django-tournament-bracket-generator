@@ -1,43 +1,79 @@
 import { Link } from "react-router-dom";
 import { FAQ } from "../../components/FAQ/FAQ";
+import home_title from "../../assets/home_title.jpg";
+import home_features from "../../assets/home_features.jpg";
+import "./Home.scss";
 
 export const Home = () => {
   return (
-    <>
-      <header>
-        <h1>Welcome to the FC 24 Tournament Bracket Generator!</h1>
-        <p>
-          Create, manage, and participate in your FC 24 tournaments with ease.
-        </p>
-      </header>
+    <div className="home-container">
+      <div className="first-box">
+        <h3 className="title">
+          <span>Experience the Thrill:</span> <br />
+          ING <span>Hubs</span> Poland Tournament - FC24
+        </h3>
 
-      <main>
-        <section>
-          <h2>Features</h2>
-          <ul>
+        <div className="image-container">
+          <img className="home-image" src={home_title} alt="Home Image" />
+        </div>
+      </div>
+
+      <div className="second-box">
+        <div className="image-container">
+          <img className="home-features" src={home_features} alt="Home Image" />
+        </div>
+
+        <div className="features">
+          <h3 className="features-title">Features</h3>
+
+          <ul className="features-list">
             <li>
-              Generate tournament brackets for FC 24 PlayStation 5 version
+              <strong>Join the Excitement:</strong> Participate in the thrilling
+              FC24 Tournament.
             </li>
-            <li>Manage players and teams</li>
-            <li>Track match results and progress</li>
-            <li>Participate in tournaments with different stages and rules</li>
-            <li>Follow fair play guidelines and enjoy the game</li>
+            <li>
+              <strong>Easy Registration:</strong> Simple and quick registration
+              process.
+            </li>
+            <li>
+              <strong>Detailed Tournament Info:</strong> Get all information you
+              need about the tournament stages, rules and more.
+            </li>
+            <li>
+              <strong>Live Matches:</strong> Stay updated with live matches and
+              never miss a moment.
+            </li>
+            <li>
+              <strong>Group Stages:</strong> Navigate through group stages with
+              ease and track tournament progress.
+            </li>
+            <li>
+              <strong>Your Voice Matters:</strong> Share your feedback and help
+              us to improve experience.
+            </li>
+            <li>
+              <strong>Fair Play:</strong> We believe in fair play. Enjoy the
+              game and respect all participants.
+            </li>
           </ul>
-        </section>
+        </div>
+      </div>
 
-        <section>
-          <h2>Get Started</h2>
-          <p>
-            Ready to kick off your FC 24 tournament experience? Click the button
-            below to start.
-          </p>
-          <Link to={"/login"}>Start Now</Link>
-        </section>
+      <div className="call-to-action-box">
+        <h3 className="title">Get Started</h3>
 
-        <FAQ />
-      </main>
+        <p>Ready to kick off your FC 24 tournament experience?</p>
 
-      <footer>© 2024 FC 24 Tournament Bracket Generator</footer>
-    </>
+        <button className="call-to-action-button">
+          <Link to={"/players-registration"} className="cta-link">
+            Register Now
+          </Link>
+        </button>
+      </div>
+
+      <FAQ />
+
+      <footer className="footer">© 2024 ING Hubs Poland - FC24</footer>
+    </div>
   );
 };

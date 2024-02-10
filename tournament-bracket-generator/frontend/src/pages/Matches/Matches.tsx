@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Autocomplete } from "../../components/Autocomplete/Autocomplete";
 
 interface FixturesDTO {
   player: number;
@@ -49,6 +50,8 @@ export const Matches = () => {
   return (
     <div>
       <h1>Matches</h1>
+
+      <Autocomplete />
 
       <div>
         {FILTER_BUTTONS.map(({ name, value }) => (

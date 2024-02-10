@@ -1,0 +1,18 @@
+.faq-container {
+  .title {
+    text-align: center;
+  }
+
+  .faq-item {
+    max-width: 500px;
+    width: 100%;
+    margin: 16px auto;
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 10px;
+
+    header {
+      cursor: pointer;
+    }
+  }
+}

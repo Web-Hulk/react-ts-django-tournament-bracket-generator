@@ -32,6 +32,10 @@ export const Sidebar = () => {
 
   return (
     <div>
+      <div>
+        ING <span style={{ color: "#ff6200" }}>Hubs</span> Poland
+      </div>
+
       <ul>
         {LINKS.map(({ name, href }) => {
           if (

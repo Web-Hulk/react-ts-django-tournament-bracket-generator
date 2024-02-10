@@ -1,16 +1,58 @@
-import { Box } from "@mui/material";
-import { AutocompleteData } from "../../types";
+import { Box, debounce } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AutocompleteData, PlayerDTO } from "../../types";
 
-type AutocompleteProps = {
-  autocompleteData: AutocompleteData;
-  handleAutocomplete: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+export const Autocomplete = () => {
+  const [players, setPlayers] = useState<PlayerDTO[]>([]);
+  const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>({
+    userInput: "",
+    suggestionsList: [],
+  });
 
-export const Autocomplete = ({
-  autocompleteData,
-  handleAutocomplete,
-}: AutocompleteProps) => {
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    axios
+      .get("http://127.0.0.1:8000/players/")
+      .then((response) => {
+        console.log("getData response: ", response.data);
+        setPlayers(response.data.results);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Debounce effect!
+  const handleAutocomplete = debounce(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log("players: ", players);
+      const { value } = e.target;
+
+      // Filter the players based on the user's input
+      let filteredPlayers = players.filter(
+        ({ first_name, last_name, nick_name }) =>
+          `${first_name} ${last_name} ${nick_name}`
+            .toLowerCase()
+            .includes(value.toLowerCase())
+      );
+
+      if (value.length === 0) {
+        filteredPlayers = [];
+      }
+
+      setAutocompleteData({
+        userInput: value,
+        suggestionsList: filteredPlayers,
+      });
+    },
+    500
+  );
+
   return (
     <Box>
       <p>Autocomplete</p>

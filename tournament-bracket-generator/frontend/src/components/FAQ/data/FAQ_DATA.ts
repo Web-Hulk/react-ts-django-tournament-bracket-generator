@@ -1,6 +1,7 @@
 type FAQ = {
   header: string;
   body: string;
+  link?: string;
 };
 
 export const FAQ_DATA: FAQ[] = [
@@ -14,7 +15,8 @@ export const FAQ_DATA: FAQ[] = [
   },
   {
     header: "3. How can I register for the tournament?",
-    body: "Registration is via Forms only (LINK). Your manager needs to approve your attendance if your schedule is > 15:00.",
+    body: "You can register for the tournament through a specific form provided by the organizers. Please note that your manager needs to approve your attendance if your schedule extends beyond 15:00.",
+    link: 'http://localhost:5173/players-registration'
   },
   {
     header: "4. What is the format of the tournament?",
@@ -46,10 +48,11 @@ export const FAQ_DATA: FAQ[] = [
   },
   {
     header: "11. Where can I find more information about the teams in FIFA 23?",
-    body: "You can find detailed information about the teams in FIFA 23 on the FIFA Index website.",
+    body: "For detailed information about the teams in FIFA 23, please refer to the FIFA Index website.",
+    link: "https://www.fifaindex.com/teams/fifa23/"
   },
   {
-    header: "What team selections are allowed in the tournament?",
+    header: "12. What team selections are allowed in the tournament?",
     body: "Only League Teams and National Teams over 4 stars are allowed. World XI and Classic XI are not permitted.",
   },
 ];

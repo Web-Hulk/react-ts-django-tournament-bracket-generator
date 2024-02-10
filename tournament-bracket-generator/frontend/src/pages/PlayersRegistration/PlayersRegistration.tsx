@@ -1,12 +1,9 @@
-import { Box, debounce } from "@mui/material";
+import { Box } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Autocomplete } from "../../components/Autocomplete/Autocomplete";
-import { AutocompleteData, Player, PlayerDTO } from "../../types";
+import { Player } from "../../types";
 
-// Allow Form Customization - Adding Fields like text input, select, etc.,
 export const PlayersRegistration = () => {
-  const [players, setPlayers] = useState<PlayerDTO[]>([]);
   const [formData, setFormData] = useState<Player>({
     first_name: "",
     last_name: "",
@@ -14,24 +11,8 @@ export const PlayersRegistration = () => {
     email: "",
   });
   const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
-  const [autocompleteData, setAutocompleteData] = useState<AutocompleteData>({
-    userInput: "",
-    suggestionsList: [],
-  });
   const [isRegistrationOpened, setIsRegistrationOpened] =
     useState<boolean>(false);
-
-  const getData = () => {
-    axios
-      .get("http://127.0.0.1:8000/players/")
-      .then((response) => {
-        console.log("getData response: ", response.data);
-        setPlayers(response.data.results);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
 
   const getRegistrationStatus = () => {
     axios
@@ -43,13 +24,12 @@ export const PlayersRegistration = () => {
         );
         setIsRegistrationOpened(response.data.results[0].status);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   };
 
   useEffect(() => {
-    getData();
     getRegistrationStatus();
   }, []);
 
@@ -81,32 +61,6 @@ export const PlayersRegistration = () => {
         console.log(error);
       });
   };
-
-  // Debounce effect!
-  const handleAutocomplete = debounce(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log("players: ", players);
-      const { value } = e.target;
-
-      // Filter the players based on the user's input
-      let filteredPlayers = players.filter(
-        ({ first_name, last_name, nick_name }) =>
-          `${first_name} ${last_name} ${nick_name}`
-            .toLowerCase()
-            .includes(value.toLowerCase())
-      );
-
-      if (value.length === 0) {
-        filteredPlayers = [];
-      }
-
-      setAutocompleteData({
-        userInput: value,
-        suggestionsList: filteredPlayers,
-      });
-    },
-    500
-  );
 
   return (
     <>
@@ -160,11 +114,6 @@ export const PlayersRegistration = () => {
           love to see you in the next one, so stay tuned for updates!
         </Box>
       )}
-
-      <Autocomplete
-        autocompleteData={autocompleteData}
-        handleAutocomplete={handleAutocomplete}
-      />
     </>
   );
 };
