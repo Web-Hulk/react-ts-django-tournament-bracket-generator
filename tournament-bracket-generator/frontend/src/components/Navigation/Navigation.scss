@@ -1,0 +1,40 @@
+@import "../../colors.scss";
+
+.navigation-container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto 20px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .navigation-container__title {
+    a {
+      text-decoration: none;
+      color: $color-text;
+    }
+  }
+
+  .navigation-container__list {
+    list-style-type: none;
+    display: flex;
+
+    .navigation-container__list-item {
+      .navigation-container__list-item__link {
+        text-decoration: none;
+        color: $color-link;
+        padding: 6px 10px;
+
+        &.active {
+          border-bottom: 3px solid $color-primary;
+          font-weight: bold;
+        }
+
+        &:hover {
+          color: $color-primary;
+        }
+      }
+    }
+  }
+}

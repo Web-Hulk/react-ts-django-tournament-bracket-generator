@@ -1,14 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { GroupTable } from "./GroupTable/GroupTable";
+import { getData } from "../../api/axios";
 import { Groups } from "../../types";
+import { GroupTable } from "./GroupTable/GroupTable";
 
 export const GroupStage = () => {
   const [groupStagesData, setGroupStagesData] = useState<Groups[]>([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/group-stages/")
+    getData("group-stages/")
       .then((response) => {
         console.log("groupStagesData: ", response.data.results);
         setGroupStagesData(response.data.results);

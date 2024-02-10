@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "../Sidebar/Sidebar";
+import { Navigation } from "../Navigation/Navigation";
 
 export const Layout = () => {
   return (
     <>
-      <Sidebar />
+      <Navigation />
       <Outlet />
     </>
   );

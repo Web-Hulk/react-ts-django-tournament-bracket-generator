@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import { postData } from "../../api/axios";
 import "./Feedback.scss";
 
 export const Feedback = () => {
@@ -22,14 +22,12 @@ export const Feedback = () => {
   };
 
   const handleSubmit = () => {
-    axios
-      .post("http://127.0.0.1:8000/feedback/", {
-        rate: rateNumber,
-        comment,
-      })
-      .then((response) => {
-        console.log(response);
-      });
+    postData("feedback/", {
+      rate: rateNumber,
+      comment,
+    }).then((response) => {
+      console.log(response);
+    });
 
     setIsFeedbackSubmitted(true);
   };

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { getData } from "../../api/axios";
 import { Autocomplete } from "../../components/Autocomplete/Autocomplete";
 
 interface FixturesDTO {
@@ -24,8 +24,7 @@ export const Matches = () => {
   const [filteredFixtures, setFilteredFixtures] = useState<FixturesDTO[]>([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/fixtures/")
+    getData("fixtures/")
       .then((response) => {
         console.log("Fixtures: ", response.data.results);
         setFixtures(response.data.results);

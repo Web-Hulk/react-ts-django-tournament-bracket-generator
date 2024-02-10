@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getData } from "../../api/axios";
 
 interface PlayerDetailsDTO {
   group: string;
@@ -20,15 +20,15 @@ export const PlayerDetails = () => {
   const [data, setData] = useState<PlayerDetailsDTO[]>([]);
   const { id } = useParams();
 
-  const getData = () => {
-    axios.get(`http://127.0.0.1:8000/player-details/${id}`).then((response) => {
+  const getPlayerDetails = () => {
+    getData(`player-details/${id}`).then((response) => {
       console.log(response.data.results);
       setData(response.data.results);
     });
   };
 
   useEffect(() => {
-    getData();
+    getPlayerDetails();
   }, []);
 
   return (

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { getData, postData } from "../../api/axios";
 import { Player } from "../../types";
 
 export const PlayersRegistration = () => {
@@ -15,8 +15,7 @@ export const PlayersRegistration = () => {
     useState<boolean>(false);
 
   const getRegistrationStatus = () => {
-    axios
-      .get("http://127.0.0.1:8000/registration-status/")
+    getData("registration-status/")
       .then((response) => {
         console.log(
           "getRegistrationStatus response: ",
@@ -45,8 +44,7 @@ export const PlayersRegistration = () => {
   const handleSubmitButton = () => {
     console.log("POST params: ", formData);
 
-    axios
-      .post("http://127.0.0.1:8000/create-player/", formData)
+    postData("create-player/", formData)
       .then((response) => {
         console.log(response);
         setIsFormSubmitted(true);

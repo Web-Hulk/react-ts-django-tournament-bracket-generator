@@ -1,7 +1,7 @@
 import { Box, debounce } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getData } from "../../api/axios";
 import { AutocompleteData, PlayerDTO } from "../../types";
 
 export const Autocomplete = () => {
@@ -11,13 +11,8 @@ export const Autocomplete = () => {
     suggestionsList: [],
   });
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = () => {
-    axios
-      .get("http://127.0.0.1:8000/players/")
+  const getPlayers = () => {
+    getData("players/")
       .then((response) => {
         console.log("getData response: ", response.data);
         setPlayers(response.data.results);
@@ -26,6 +21,10 @@ export const Autocomplete = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    getPlayers();
+  }, []);
 
   // Debounce effect!
   const handleAutocomplete = debounce(
