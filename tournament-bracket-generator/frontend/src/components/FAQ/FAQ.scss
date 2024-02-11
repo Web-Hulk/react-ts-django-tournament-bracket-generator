@@ -1,18 +1,33 @@
+@import "../../colors.scss";
+
 .faq-container {
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 40px;
+
   .title {
-    text-align: center;
+    background-color: $color-box-background;
+    padding: 24px 30px;
+    border-radius: 30px;
   }
 
   .faq-item {
-    max-width: 500px;
     width: 100%;
-    margin: 16px auto;
-    border: 1px solid gray;
-    border-radius: 8px;
-    padding: 10px;
+    padding: 24px 30px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $color-faq-border;
+    }
 
     header {
       cursor: pointer;
+      font-weight: bold;
+    }
+
+    section {
+      p {
+        margin-top: 14px;
+      }
     }
   }
 }

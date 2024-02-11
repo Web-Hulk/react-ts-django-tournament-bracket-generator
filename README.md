@@ -10,68 +10,51 @@
 
 ## App Steps
 
-1. **Form Submissions**: The application should be able to collect form submissions from potential users, save them in the database, and sort them by date and time. When the owner of the tournament creates a tournament, they should be able to send a link or QR code in a promotional post, and users can fill in the form.
+1. Add limitations when assigning players to Groups [Available players, groups]
 
-2. Think about PUT and PATCH request [Backend]
+2. Let users reverse their submit response (in the case they want to resign from participation)
+   Idea 1: Another endpoint to send email to cancel registration
+   Idea 2: Generate a unique URL for each registration (when clicked, user is deleted immediately)
+   [Frontend] [Backend]
+3. **Final Standings Display**: Display the final standings in a visually appealing way, possibly using graphics or animations to highlight the top three players. [Frontend] [Backend]
 
-3. Create pages for:
+---
 
-- Tournament Location
+**Please note that this will only hide the “Add” button. Users will still be able to add new GroupStage instances by other means (for example, by manually entering the URL for the add page). If you want to completely prevent new GroupStage instances from being created, you’ll need to also override the save_model method to prevent saving when there are 16 or more GroupStage instances.**
 
-13. Consider to implement something like blog posts on the main page of the tournament
+---
 
-14. Find out how to register (without logging functionality) that user was already registered to not let him do this twice or more.
+4. Knockout Stage!
+5. What about manually created instances?
+6. When two or more players have the same stats in the group after 3 matches they have to play extra match, so you have to add an option to create Fixture with name Extra to specify that this is something extraordinary - consider if the values in the GroupStage should be updated automatically.
 
-15. Let users reverse their submit response (in the case they want to resign from participation) [Frontend] [Backend]
+7. Exceptions in Django! [Backend Refactor]
+8. Clean TS interface and types through whole project!
 
-16. Clickable Table Rows: Making the table rows clickable to show more details about a player or a match is a common and intuitive design pattern. This would allow users to access more information without cluttering the main table view.
+9. Add option to generate professional report with statistics etc.,
+10. Send email with confirmation that user was successfully registered
+11. **Data Export**: The ability to export player data to common formats like Excel or PDF.
+12. Try to generate Excel file based on the whole Tournament
+13. Translations
 
-17. Player Detail Page: A detail page for each player that shows all their matches would be very useful. This could include information like the player’s past performance, upcoming matches, and statistics.
+**IDEAS**
 
-18. Clean TS interface and types through whole project!
+---
 
-19. Add Postman! [Backend]
+**TECH STACK**
 
-20. Add GraphQL [Frontend]
+17. Swagger
+18. Add GraphQL [Frontend]
+19. What about Docker?! [DevOps]
+20. Tests [Backend] [Frontend]
+21. Storybook
+22. What other tools can I add to my APP?!
+23. Redis?
+24. React Hook Form for forms
+25. Different requests library than AXIOS
+26. Code documentation
 
-21. What about Docker?! [DevOps]
-
-22. Test [Backend] [Frontend]
-
-23. Swagger
-
-24. Can't assign more than 4 people to one group [Backend Serializer or View]
-
-25. Add backend tag to check if the registration form should be available or nice message that signing is over? [Backend endpoint?!]
-
-26. Can 2 players or more can be on the same place in the group? [Backend Serializer or View]
-
-27. Fixture Feature: Having a dedicated page for fixtures that users can access from the sidebar is a great idea. This would provide users with an overview of all matches and allow them to easily keep track of past, ongoing, and future matches. [Backend] [Frontend]
-
-28. Knockout Stage!
-
-29. **Data Export**: The ability to export player data to common formats like Excel or PDF.
-
-30. **Final Standings Display**: Display the final standings in a visually appealing way, possibly using graphics or animations to highlight the top three players.
-
-31. Customize Admin Panel - [https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site]
-
-PLANS FOR MATCHES AND GROUPS:
-Sure, I’d be happy to provide some guidance. Here are my thoughts:
-
-Shuffling Players and Assigning Groups: Whether you shuffle players and assign them to groups on the frontend or backend depends on your specific needs. If the group assignment logic is simple and doesn’t involve sensitive data, doing it on the frontend can be a good option. However, if the logic is complex or involves sensitive data, it’s usually better to do it on the backend. In your case, since you mentioned that group assignment will be done through a professional draw, it might be best to handle this on the backend.
-
-Match Assignments: Automating match assignments on the backend is a good idea. This can simplify the frontend code and ensure that the match assignment logic is consistent and reliable. You can use a round-robin algorithm to ensure each player plays with every other player in their group.
-
-Database Design: Starting with an example database table is a great idea. This can help you visualize the data and understand how to manage it. You might want to include tables for players, groups, and matches (fixtures). Each row in the players table could represent a player, each row in the groups table could represent a group, and each row in the matches table could represent a match. The matches table could have foreign keys linking to the players and groups tables.
-
-Frontend vs Backend: In general, it’s a good practice to keep the frontend as simple as possible and offload complex logic to the backend. This can make the frontend faster and more responsive, and it can also make the application more secure, as backend code is harder for malicious users to tamper with. In your case, I would recommend handling both the shuffling of players and the assignment of matches on the backend.
-
-Tournament Options: Starting with a round-robin option for the group stage is a good choice. This is a fair and straightforward system that’s easy to understand. As your application grows, you can consider adding more options.
-
-Group Assignment: Since the group assignment will be done through a professional draw, it would be most efficient to handle this on the backend. Once the draw is complete, you can update the database with the group assignments. Then, when the frontend needs to display the groups, it can simply fetch the latest data from the backend.
-
-I hope this helps! Let me know if you have any other questions or need further clarification. 😊
+---
 
 **Future improvements ideas:**
 
@@ -84,3 +67,5 @@ I hope this helps! Let me know if you have any other questions or need further c
 - **Tournament Promotion**: Consider adding features to help users promote their tournaments, such as social media integration or promotional materials.
 - **Match Scheduling**: Depending on the type of tournament, you might need to implement a feature for scheduling matches. This could include date, time, and location details for each match.
 - **Notifications**: Consider implementing a notification system to keep users informed about upcoming matches, tournament results, and other important updates.
+- **Link or QR Code to registration page**: When the owner of the tournament start registration, they should be able to send a link or QR code in a promotional post, and users can fill in the form.
+- **Blog** - Consider to implement something like blog posts on the main page of the tournament

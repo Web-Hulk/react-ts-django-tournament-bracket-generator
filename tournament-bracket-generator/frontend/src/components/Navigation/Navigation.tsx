@@ -15,7 +15,7 @@ const LINKS: Links[] = [
   { name: "Registration", href: "/players-registration" },
   { name: "Fixtures", href: "/fixtures" },
   { name: "Group Stage", href: "/group-stage" },
-  // { name: "Knockout Stage", href: "/knockout-stage" },
+  { name: "Knockout Stage", href: "/knockout-stage" },
   { name: "Tournament Info", href: "/tournament-info" },
   { name: "Feedback", href: "/feedback" },
 ];

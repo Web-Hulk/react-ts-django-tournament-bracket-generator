@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -15,7 +16,7 @@ export const FAQItem = ({ header, body, link }: FAQItemProps) => {
   };
 
   return (
-    <div className="faq-item">
+    <Box className="faq-item">
       <header onClick={setSectionVisibility}>
         <p>{header}</p>
       </header>
@@ -34,6 +35,6 @@ export const FAQItem = ({ header, body, link }: FAQItemProps) => {
           </p>
         </section>
       ) : null}
-    </div>
+    </Box>
   );
 };

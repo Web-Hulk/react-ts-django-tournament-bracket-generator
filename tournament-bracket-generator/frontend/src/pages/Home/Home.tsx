@@ -1,17 +1,21 @@
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { FAQ } from "../../components/FAQ/FAQ";
-import home_title from "../../assets/home_title.jpg";
 import home_features from "../../assets/home_features.jpg";
+import home_title from "../../assets/home_title.jpg";
+import { FAQ } from "../../components/FAQ/FAQ";
 import "./Home.scss";
 
 export const Home = () => {
   return (
     <div className="home-container">
       <div className="first-box">
-        <h3 className="title">
-          <span>Experience the Thrill:</span> <br />
-          ING <span>Hubs</span> Poland Tournament - FC24
-        </h3>
+        <div className="text">
+          <h2 className="title">Join the FC24 Tournament!</h2>
+          <p className="description">
+            Register, compete and keep track of all match data in one place.
+            Your journey to glory start here!
+          </p>
+        </div>
 
         <div className="image-container">
           <img className="home-image" src={home_title} alt="Home Image" />
@@ -24,7 +28,7 @@ export const Home = () => {
         </div>
 
         <div className="features">
-          <h3 className="features-title">Features</h3>
+          <h2 className="features-title">Features</h2>
 
           <ul className="features-list">
             <li>
@@ -60,20 +64,18 @@ export const Home = () => {
       </div>
 
       <div className="call-to-action-box">
-        <h3 className="title">Get Started</h3>
+        <p>
+          Ready to <strong>kick off</strong> your FC 24 tournament experience?
+        </p>
 
-        <p>Ready to kick off your FC 24 tournament experience?</p>
-
-        <button className="call-to-action-button">
-          <Link to={"/players-registration"} className="cta-link">
+        <Link to={"/players-registration"}>
+          <Button variant="contained" className="call-to-action-button">
             Register Now
-          </Link>
-        </button>
+          </Button>
+        </Link>
       </div>
 
       <FAQ />
-
-      <footer className="footer">© 2024 ING Hubs Poland - FC24</footer>
     </div>
   );
 };

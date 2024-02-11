@@ -1,11 +1,12 @@
+import { Box } from "@mui/material";
+import "./FAQ.scss";
 import { FAQItem } from "./FAQItem/FAQItem";
 import { FAQ_DATA } from "./data/FAQ_DATA";
-import "./FAQ.scss";
 
 export const FAQ = () => {
   return (
-    <div className="faq-container">
-      <h3 className="title">FAQ</h3>
+    <Box className="faq-container">
+      <h2 className="title">Frequently Asked Questions</h2>
 
       {FAQ_DATA.map(({ header, body, link }, index) => (
         <FAQItem
@@ -15,6 +16,6 @@ export const FAQ = () => {
           link={link}
         />
       ))}
-    </div>
+    </Box>
   );
 };
