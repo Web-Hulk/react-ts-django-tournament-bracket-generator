@@ -1,4 +1,6 @@
-import { Box } from "@mui/material";
+import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
+import { Box, Typography } from "@mui/material";
+import classNames from "classnames";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,13 +19,18 @@ export const FAQItem = ({ header, body, link }: FAQItemProps) => {
 
   return (
     <Box className="faq-item">
-      <header onClick={setSectionVisibility}>
-        <p>{header}</p>
+      <header className="faq-item__header" onClick={setSectionVisibility}>
+        <span>{header}</span>
+        <ArrowDownwardOutlinedIcon
+          className={classNames({
+            active: isSectionDisplayed,
+          })}
+        />
       </header>
 
       {isSectionDisplayed ? (
-        <section>
-          <p>
+        <Box mt={3}>
+          <Typography>
             {body}{" "}
             {link && link.startsWith("localhost") ? (
               <Link to={link}>Click here for more info.</Link>
@@ -32,8 +39,8 @@ export const FAQItem = ({ header, body, link }: FAQItemProps) => {
                 Click here for more info.
               </a>
             )}
-          </p>
-        </section>
+          </Typography>
+        </Box>
       ) : null}
     </Box>
   );

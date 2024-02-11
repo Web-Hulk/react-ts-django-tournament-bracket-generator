@@ -12,6 +12,7 @@ import { Matches } from "./pages/Matches/Matches.tsx";
 import { PlayerDetails } from "./pages/PlayerDetails/PlayerDetails.tsx";
 import { PlayersRegistration } from "./pages/PlayersRegistration/PlayersRegistration.tsx";
 import { TournamentInfo } from "./pages/TournamentInfo/TournamentInfo.tsx";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,25 @@ const router = createBrowserRouter([
   },
 ]);
 
+const theme = createTheme({
+  typography: {
+    fontFamily: '"Inter", sans-serif;',
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: '"Inter", sans-serif;',
+        },
+      },
+    },
+  },
+});
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );

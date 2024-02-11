@@ -9,13 +9,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 40px;
 
     .text {
       text-align: left;
       flex: 1;
-      // max-width: 300px;
-      // width: 100%;
 
       .title {
         margin-bottom: 8px;
@@ -44,7 +41,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 40px;
 
     .image-container {
       flex: 2;
@@ -74,11 +70,6 @@
 
   .call-to-action-box {
     text-align: center;
-    margin-bottom: 40px;
-
-    p {
-      margin-bottom: 12px;
-    }
 
     .title {
       color: #ff6200;
@@ -89,7 +80,6 @@
       border-radius: 30px;
       padding: 12px 24px;
       font-weight: bold;
-      font-family: "Inter", sans-serif;
     }
   }
 }

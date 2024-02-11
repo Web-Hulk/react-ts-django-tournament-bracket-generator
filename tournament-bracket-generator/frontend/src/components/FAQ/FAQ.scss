@@ -3,7 +3,6 @@
 .faq-container {
   max-width: 1200px;
   width: 100%;
-  margin-bottom: 40px;
 
   .title {
     background-color: $color-box-background;
@@ -19,14 +18,19 @@
       border-bottom: 1px solid $color-faq-border;
     }
 
-    header {
+    .faq-item__header {
       cursor: pointer;
       font-weight: bold;
-    }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-    section {
-      p {
-        margin-top: 14px;
+      .MuiSvgIcon-root {
+        transition: all 1s ease;
+
+        &.active {
+          transform: rotate(180deg);
+        }
       }
     }
   }
