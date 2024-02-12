@@ -50,7 +50,11 @@ export const Navigation = () => {
   };
 
   return (
-    <Box className="navigation-container">
+    <Box
+      className={classNames("navigation-container", {
+        "is-desktop": !isMobile,
+      })}
+    >
       <h1 className="navigation-container__title">
         <Link to={"/"}>FC24 Victory Cup</Link>
       </h1>
@@ -63,7 +67,7 @@ export const Navigation = () => {
 
       <ul
         className={classNames("navigation-container__list", {
-          mobile: isMobile,
+          "mobile-view": isMobile,
           opened: isMenuOpened,
         })}
       >
@@ -79,19 +83,16 @@ export const Navigation = () => {
             return (
               <li
                 key={`Link name - ${name}`}
-                className={classNames("navigation-container__list-item", {
+                className={classNames("navigation-container__item", {
                   "mobile-list-item": isMenuOpened,
                 })}
               >
                 <Link
                   to={`${href}`}
                   onClick={() => isMobile && setIsMenuOpened(false)}
-                  className={classNames(
-                    "navigation-container__list-item__link",
-                    {
-                      active: location.pathname === href,
-                    }
-                  )}
+                  className={classNames("navigation-container__item__link", {
+                    active: location.pathname === href,
+                  })}
                 >
                   {name}
                 </Link>

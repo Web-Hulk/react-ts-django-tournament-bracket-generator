@@ -5,26 +5,26 @@
   width: 95%;
   margin: 0 auto;
 
-  .first-box {
+  .home-top {
     display: flex;
     flex-direction: column;
     text-align: center;
 
-    .text {
+    .home__text {
       margin-bottom: 18px;
 
-      .title {
+      .home__title {
         margin-bottom: 8px;
       }
 
-      .description {
+      .home__description {
         color: $color-link;
         font-weight: bold;
       }
     }
 
-    .image-container {
-      .home-image {
+    .home__image-container {
+      .home__image {
         max-width: 400px;
         max-height: 500px;
         height: 100%;
@@ -34,13 +34,13 @@
     }
   }
 
-  .second-box {
+  .home__features {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
 
-    .image-container {
-      .home-features {
+    .home__feature__image-container {
+      .home__features__image {
         max-width: 400px;
         max-height: 500px;
         height: 100%;
@@ -49,14 +49,14 @@
       }
     }
 
-    .features {
+    .home__features-content {
       margin-bottom: 18px;
 
-      .features-title {
+      .home__features-title {
         text-align: center;
       }
 
-      .features-list {
+      .home__features-list {
         margin-top: 18px;
         list-style-type: none;
 
@@ -67,14 +67,10 @@
     }
   }
 
-  .call-to-action-box {
+  .home__cta-container {
     text-align: center;
 
-    .title {
-      color: #ff6200;
-    }
-
-    .call-to-action-button {
+    .home__cta-button {
       background-color: #ff6200;
       border-radius: 30px;
       padding: 12px 24px;
@@ -85,44 +81,44 @@
 
 @media (min-width: 900px) {
   .home-container {
-    .first-box {
+    .home-top {
       flex-direction: row;
       align-items: center;
       justify-content: center;
 
-      .text {
+      .home__text {
         text-align: left;
         flex: 1;
       }
 
-      .image-container {
+      .home__image-container {
         flex: 2;
 
-        .home-image {
+        .home__image {
           max-width: 475px;
         }
       }
     }
 
-    .second-box {
+    .home__features {
       flex-direction: row;
       justify-content: center;
 
-      .image-container {
+      .home__feature__image-container {
         flex: 2;
         width: 100%;
         text-align: center;
 
-        .home-features {
+        .home__features__image {
           max-width: 475px;
         }
       }
 
-      .features {
+      .home__features-content {
         flex: 1;
         width: 100%;
 
-        .features-title {
+        .home__features-title {
           text-align: left;
         }
       }

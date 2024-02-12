@@ -18,8 +18,8 @@ export const FAQItem = ({ header, body, link }: FAQItemProps) => {
   };
 
   return (
-    <Box className="faq-item">
-      <header className="faq-item__header" onClick={setSectionVisibility}>
+    <Box className="faq__item">
+      <header className="faq__item__header" onClick={setSectionVisibility}>
         <span>{header}</span>
         <ArrowDownwardOutlinedIcon
           className={classNames({

@@ -6,7 +6,7 @@ import { FAQ_DATA } from "./data/FAQ_DATA";
 export const FAQ = () => {
   return (
     <Box mb={5} className="faq-container">
-      <h2 className="title">Frequently Asked Questions</h2>
+      <h2 className="faq__title">Frequently Asked Questions</h2>
 
       {FAQ_DATA.map(({ header, body, link }, index) => (
         <FAQItem
