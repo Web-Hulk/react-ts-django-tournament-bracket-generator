@@ -11,7 +11,7 @@ export const Home = () => {
     <Box className="home-container">
       <Box mb={5} className="first-box">
         <Box className="text">
-          <h2 className="title">Join the FC24 Tournament!</h2>
+          <h2 className="title">Join the FC24 Victory Cup!</h2>
 
           <Typography className="description">
             Register, compete and keep track of all match data in one place.

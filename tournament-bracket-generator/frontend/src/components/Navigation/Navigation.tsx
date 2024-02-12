@@ -1,4 +1,6 @@
-import { Box } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Box, useMediaQuery } from "@mui/material";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -23,7 +25,9 @@ const LINKS: Links[] = [
 export const Navigation = () => {
   const [isRegistrationOpened, setIsRegistrationOpened] =
     useState<boolean>(true);
+  const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
   const location = useLocation();
+  const isMobile = useMediaQuery("(max-width: 1150px)");
 
   useEffect(() => {
     const getDataAboutRegistrationStatus = () => {
@@ -33,7 +37,17 @@ export const Navigation = () => {
     };
 
     getDataAboutRegistrationStatus();
-  }, []);
+
+    isMenuOpened
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
+
+    !isMobile && setIsMenuOpened(false);
+  }, [location.pathname, isMenuOpened, isMobile]);
+
+  const handleMobileMenu = () => {
+    setIsMenuOpened(!isMenuOpened);
+  };
 
   return (
     <Box className="navigation-container">
@@ -41,7 +55,18 @@ export const Navigation = () => {
         <Link to={"/"}>FC24 Victory Cup</Link>
       </h1>
 
-      <ul className="navigation-container__list">
+      {isMobile && (
+        <Box className="menu-icon" onClick={handleMobileMenu}>
+          {isMenuOpened ? <CloseIcon /> : <MenuIcon />}
+        </Box>
+      )}
+
+      <ul
+        className={classNames("navigation-container__list", {
+          mobile: isMobile,
+          opened: isMenuOpened,
+        })}
+      >
         {LINKS.map(({ name, href }) => {
           if (
             isRegistrationOpened &&
@@ -54,10 +79,13 @@ export const Navigation = () => {
             return (
               <li
                 key={`Link name - ${name}`}
-                className="navigation-container__list-item"
+                className={classNames("navigation-container__list-item", {
+                  "mobile-list-item": isMenuOpened,
+                })}
               >
                 <Link
                   to={`${href}`}
+                  onClick={() => isMobile && setIsMenuOpened(false)}
                   className={classNames(
                     "navigation-container__list-item__link",
                     {

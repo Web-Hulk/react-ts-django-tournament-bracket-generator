@@ -32,13 +32,11 @@ export const FAQItem = ({ header, body, link }: FAQItemProps) => {
         <Box mt={3}>
           <Typography>
             {body}{" "}
-            {link && link.startsWith("localhost") ? (
-              <Link to={link}>Click here for more info.</Link>
-            ) : (
-              <a href={link} target="_blank" rel="noopener noreferrer">
-                Click here for more info.
-              </a>
-            )}
+            {link ? (
+              <Link to={link}>
+                <strong>Click here for more info.</strong>
+              </Link>
+            ) : null}
           </Typography>
         </Box>
       ) : null}
