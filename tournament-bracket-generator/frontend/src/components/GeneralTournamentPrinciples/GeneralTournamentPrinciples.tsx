@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const GeneralTournamentPrinciples = () => {
   return (
-    <div>
+    <>
       <p>
         We're excited to have you participate in our upcoming event. Here are
         some general principles to guide you:
@@ -33,7 +33,7 @@ export const GeneralTournamentPrinciples = () => {
         </li>
         <li>
           <strong>Registration:</strong> Please register via our online form [
-          <Link to="/players-registration">LINK</Link>].
+          <Link to="/players-registration">REGISTRATION</Link>].
         </li>
         <li>
           <strong>Manager Approval:</strong> If your schedule extends beyond
@@ -41,7 +41,7 @@ export const GeneralTournamentPrinciples = () => {
         </li>
       </ul>
 
-      <p>We're looking forward to seeing you there!</p>
-    </div>
+      <h3>We're looking forward to seeing you there!</h3>
+    </>
   );
 };

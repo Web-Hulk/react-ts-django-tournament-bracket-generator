@@ -1,8 +1,6 @@
 export const TournamentStatute = () => {
   return (
-    <div>
-      <h1>Tournament Statute</h1>
-
+    <>
       <p>Here are the key rules and regulations for our tournament:</p>
 
       <ol>
@@ -168,6 +166,6 @@ export const TournamentStatute = () => {
           competition reserves the right to make changes to these regulations.
         </li>
       </ol>
-    </div>
+    </>
   );
 };

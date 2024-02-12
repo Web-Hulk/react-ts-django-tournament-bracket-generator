@@ -1,8 +1,11 @@
+import { Box, Button } from "@mui/material";
 import { useMemo, useState } from "react";
 import { GeneralTournamentPrinciples } from "../../components/GeneralTournamentPrinciples/GeneralTournamentPrinciples";
 import { GeneralTournamentRules } from "../../components/GeneralTournamentRules/GeneralTournamentRules";
 import { Prizes } from "../../components/Prizes/Prizes";
 import { TournamentStatute } from "../../components/TournamentStatute/TournamentStatute";
+import "./TournamentInfo.scss";
+import classNames from "classnames";
 
 const INFO_BUTTONS = [
   { name: "General Principles", value: "general-principles" },
@@ -12,7 +15,8 @@ const INFO_BUTTONS = [
 ];
 
 export const TournamentInfo = () => {
-  const [selectedButton, setSelectedButton] = useState<string>("");
+  const [selectedButton, setSelectedButton] =
+    useState<string>("general-principles");
 
   const displayedComponent = useMemo(() => {
     switch (selectedButton) {
@@ -28,20 +32,24 @@ export const TournamentInfo = () => {
   }, [selectedButton]);
 
   return (
-    <div>
-      <h1>Tournament Info</h1>
+    <Box className="info-container">
+      <Box className="info__btns-container">
+        {INFO_BUTTONS.map(({ name, value }) => (
+          <Button
+            variant="outlined"
+            key={`Selected - ${name}`}
+            type="button"
+            onClick={() => setSelectedButton(value)}
+            className={classNames({
+              active: value === selectedButton,
+            })}
+          >
+            {name}
+          </Button>
+        ))}
+      </Box>
 
-      {INFO_BUTTONS.map(({ name, value }) => (
-        <button
-          key={`Selected - ${name}`}
-          type="button"
-          onClick={() => setSelectedButton(value)}
-        >
-          {name}
-        </button>
-      ))}
-
-      {displayedComponent}
-    </div>
+      <Box className="info__content">{displayedComponent}</Box>
+    </Box>
   );
 };

@@ -1,8 +1,6 @@
 export const GeneralTournamentRules = () => {
   return (
-    <div>
-      <h1>Welcome to the FC 24 Tournament!</h1>
-
+    <>
       <p>Here are the general rules and conditions for our tournament:</p>
 
       <ul>
@@ -64,6 +62,6 @@ export const GeneralTournamentRules = () => {
         We're looking forward to an exciting tournament. Good luck to all
         participants!
       </p>
-    </div>
+    </>
   );
 };
