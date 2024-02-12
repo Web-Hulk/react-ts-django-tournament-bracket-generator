@@ -1,14 +1,53 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getData, postData } from "../../api/axios";
 import { Player } from "../../types";
+import "./PlayersRegistration.scss";
+import { Link } from "react-router-dom";
+import DoneIcon from "@mui/icons-material/Done";
+
+const RegistrationClosed = () => {
+  return (
+    <>
+      <h2 className="registration__title">
+        Registration for this tournament is closed. Stay tuned for the next one!
+      </h2>
+
+      <Link to={"/"}>
+        <Button variant="contained" className="registration__home-button">
+          Back Home
+        </Button>
+      </Link>
+    </>
+  );
+};
+
+const SuccessfullFormSubmission = () => {
+  return (
+    <>
+      <Box className="registration__done-icon">
+        <DoneIcon />
+      </Box>
+
+      <h2 className="registration__title">Thank you for submitting!</h2>
+      <p className="registration__description">
+        You have successfully submitted. We will let you know when we launch.
+      </p>
+
+      <Link to={"/"}>
+        <Button variant="contained" className="registration__home-button">
+          Done
+        </Button>
+      </Link>
+    </>
+  );
+};
 
 export const PlayersRegistration = () => {
   const [formData, setFormData] = useState<Player>({
     first_name: "",
     last_name: "",
     nick_name: "",
-    email: "",
   });
   const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
   const [isRegistrationOpened, setIsRegistrationOpened] =
@@ -52,7 +91,6 @@ export const PlayersRegistration = () => {
           first_name: "",
           last_name: "",
           nick_name: "",
-          email: "",
         });
       })
       .catch((error) => {
@@ -61,57 +99,58 @@ export const PlayersRegistration = () => {
   };
 
   return (
-    <>
-      <h1>Players Registration</h1>
-
-      {/* Refactor this part - it is worth to split this whole part below! */}
+    <Box className="registration-container">
       {isRegistrationOpened ? (
         <>
           {isFormSubmitted ? (
-            <Box>
-              Your registration form has been successfully submitted. We're
-              excited to have you join us. Stay tuned for further updated!
-            </Box>
+            <SuccessfullFormSubmission />
           ) : (
-            <Box>
-              <input
-                type="text"
-                name="first_name"
-                placeholder="Enter you name"
-                onChange={handleInput}
-              />
-              <input
-                type="text"
-                name="last_name"
-                placeholder="Enter your surname"
-                onChange={handleInput}
-              />
-              <input
-                type="text"
-                name="nick_name"
-                placeholder="Enter your nickname"
-                onChange={handleInput}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                onChange={handleInput}
-              />
+            <>
+              <h2 className="registration__title">
+                Step into the Arena: <br />
+                Sign Up for the Ultimate Gaming Showdown!
+              </h2>
 
-              {/* When Submit added records is not available in autocomplete */}
-              <button type="button" onClick={handleSubmitButton}>
-                Submit
-              </button>
-            </Box>
+              <Box className="registration__inputs-container">
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder="Name"
+                  onChange={handleInput}
+                  className="registration__input"
+                />
+
+                <input
+                  type="text"
+                  name="last_name"
+                  placeholder="Surname"
+                  onChange={handleInput}
+                  className="registration__input"
+                />
+
+                <input
+                  type="text"
+                  name="nick_name"
+                  placeholder="Nickname"
+                  onChange={handleInput}
+                  className="registration__input"
+                />
+
+                <Button
+                  variant="contained"
+                  type="button"
+                  onClick={handleSubmitButton}
+                  className="registration__submit-button"
+                >
+                  Submit
+                </Button>
+              </Box>
+            </>
           )}
         </>
       ) : (
-        <Box>
-          We’re sorry, but registration for this tournament has closed. We’d
-          love to see you in the next one, so stay tuned for updates!
-        </Box>
+        <RegistrationClosed />
       )}
-    </>
+    </Box>
   );
 };

@@ -7,7 +7,6 @@ export type Player = {
   first_name: string;
   last_name: string;
   nick_name: string;
-  email: string;
 };
 
 // Autocomplete.tsx

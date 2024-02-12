@@ -75,7 +75,8 @@ export const Navigation = () => {
           if (
             isRegistrationOpened &&
             (name === "Group Stage" ||
-              name === "Matches" ||
+              name === "Knockout Stage" ||
+              name === "Fixtures" ||
               name === "Feedback")
           ) {
             return null;
