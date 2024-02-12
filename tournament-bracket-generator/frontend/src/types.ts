@@ -33,3 +33,10 @@ export type Group = {
 export type Groups = {
   [key: string]: Group;
 };
+
+// PlayerRegistation
+export type FormErrorType = {
+  first_name_error: string;
+  last_name_error: string;
+  nick_name_error: string;
+};

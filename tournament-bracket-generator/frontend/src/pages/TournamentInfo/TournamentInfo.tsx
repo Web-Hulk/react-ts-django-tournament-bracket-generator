@@ -1,9 +1,9 @@
 import { Box, Button } from "@mui/material";
 import { useMemo, useState } from "react";
-import { GeneralTournamentPrinciples } from "../../components/GeneralTournamentPrinciples/GeneralTournamentPrinciples";
-import { GeneralTournamentRules } from "../../components/GeneralTournamentRules/GeneralTournamentRules";
-import { Prizes } from "../../components/Prizes/Prizes";
-import { TournamentStatute } from "../../components/TournamentStatute/TournamentStatute";
+import { GeneralTournamentPrinciples } from "../../components/TournamentInfo/GeneralTournamentPrinciples";
+import { GeneralTournamentRules } from "../../components/TournamentInfo/GeneralTournamentRules";
+import { Prizes } from "../../components/TournamentInfo/Prizes";
+import { TournamentStatute } from "../../components/TournamentInfo/TournamentStatute";
 import "./TournamentInfo.scss";
 import classNames from "classnames";
 

@@ -1,53 +1,22 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getData, postData } from "../../api/axios";
-import { Player } from "../../types";
+import { Form } from "../../components/PlayersRegistration/Form";
+import { RegistrationClosed } from "../../components/PlayersRegistration/RegistrationClosed";
+import { SuccessfullFormSubmission } from "../../components/PlayersRegistration/SuccessfullFormSubmission";
+import { FormErrorType, Player } from "../../types";
 import "./PlayersRegistration.scss";
-import { Link } from "react-router-dom";
-import DoneIcon from "@mui/icons-material/Done";
-
-const RegistrationClosed = () => {
-  return (
-    <>
-      <h2 className="registration__title">
-        Registration for this tournament is closed. Stay tuned for the next one!
-      </h2>
-
-      <Link to={"/"}>
-        <Button variant="contained" className="registration__home-button">
-          Back Home
-        </Button>
-      </Link>
-    </>
-  );
-};
-
-const SuccessfullFormSubmission = () => {
-  return (
-    <>
-      <Box className="registration__done-icon">
-        <DoneIcon />
-      </Box>
-
-      <h2 className="registration__title">Thank you for submitting!</h2>
-      <p className="registration__description">
-        You have successfully submitted. We will let you know when we launch.
-      </p>
-
-      <Link to={"/"}>
-        <Button variant="contained" className="registration__home-button">
-          Done
-        </Button>
-      </Link>
-    </>
-  );
-};
 
 export const PlayersRegistration = () => {
   const [formData, setFormData] = useState<Player>({
     first_name: "",
     last_name: "",
     nick_name: "",
+  });
+  const [formErrors, setFormErrors] = useState<FormErrorType>({
+    first_name_error: "",
+    last_name_error: "",
+    nick_name_error: "",
   });
   const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
   const [isRegistrationOpened, setIsRegistrationOpened] =
@@ -95,59 +64,29 @@ export const PlayersRegistration = () => {
       })
       .catch((error) => {
         console.log(error);
+        setFormErrors({
+          ...formErrors,
+          first_name_error: formData.first_name ? "" : "Name cannot be empty",
+          last_name_error: formData.last_name ? "" : "Surname cannot be empty",
+          nick_name_error: formData.nick_name
+            ? error.response.data.message
+            : "Nickname cannot be empty",
+        });
       });
   };
 
   return (
     <Box className="registration-container">
       {isRegistrationOpened ? (
-        <>
-          {isFormSubmitted ? (
-            <SuccessfullFormSubmission />
-          ) : (
-            <>
-              <h2 className="registration__title">
-                Step into the Arena: <br />
-                Sign Up for the Ultimate Gaming Showdown!
-              </h2>
-
-              <Box className="registration__inputs-container">
-                <input
-                  type="text"
-                  name="first_name"
-                  placeholder="Name"
-                  onChange={handleInput}
-                  className="registration__input"
-                />
-
-                <input
-                  type="text"
-                  name="last_name"
-                  placeholder="Surname"
-                  onChange={handleInput}
-                  className="registration__input"
-                />
-
-                <input
-                  type="text"
-                  name="nick_name"
-                  placeholder="Nickname"
-                  onChange={handleInput}
-                  className="registration__input"
-                />
-
-                <Button
-                  variant="contained"
-                  type="button"
-                  onClick={handleSubmitButton}
-                  className="registration__submit-button"
-                >
-                  Submit
-                </Button>
-              </Box>
-            </>
-          )}
-        </>
+        isFormSubmitted ? (
+          <SuccessfullFormSubmission />
+        ) : (
+          <Form
+            formErrors={formErrors}
+            handleInput={handleInput}
+            handleSubmitButton={handleSubmitButton}
+          />
+        )
       ) : (
         <RegistrationClosed />
       )}
