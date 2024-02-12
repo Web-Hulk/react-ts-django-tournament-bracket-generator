@@ -9,7 +9,6 @@ class Player(models.Model):
   first_name = models.CharField(max_length=30, verbose_name="first name")
   last_name = models.CharField(max_length=30, verbose_name="last name")
   nick_name = models.CharField(max_length=30, unique=True, verbose_name="nickname")
-  email = models.EmailField(unique=True, verbose_name="email")
   added_to_teams_chat = models.BooleanField(default=False, verbose_name="added to Teams chat")
   registration_date = models.DateTimeField(default=timezone.now, editable=False, verbose_name="registration date")
 

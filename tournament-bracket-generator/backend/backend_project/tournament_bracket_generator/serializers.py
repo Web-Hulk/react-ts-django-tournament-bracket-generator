@@ -4,12 +4,12 @@ from .models import Player, Fixture, GroupStage, Feedback, RegistrationStatus
 class PlayerSerializer(serializers.ModelSerializer):
   class Meta:
     model = Player
-    fields = ('id', 'first_name', 'last_name', 'nick_name', 'email')
+    fields = ('id', 'first_name', 'last_name', 'nick_name')
 
 class CreatePlayerSerializer(serializers.ModelSerializer):
   class Meta:
     model = Player
-    fields = ('first_name', 'last_name', 'nick_name', 'email')
+    fields = ('first_name', 'last_name', 'nick_name')
 
 class FixtureSerializer(serializers.ModelSerializer):
   player = serializers.StringRelatedField()

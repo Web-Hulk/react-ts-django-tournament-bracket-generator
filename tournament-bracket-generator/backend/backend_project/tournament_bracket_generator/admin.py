@@ -27,9 +27,9 @@ class PlayerAdmin(admin.ModelAdmin):
 
   export_as_csv.short_description = "Export Selected"
 
-  list_display = ('first_name', 'last_name', 'nick_name', 'email', 'added_to_teams_chat', 'registration_date')
+  list_display = ('first_name', 'last_name', 'nick_name', 'added_to_teams_chat', 'registration_date')
   list_filter = ('added_to_teams_chat',)
-  search_fields = ('first_name', 'last_name', 'nick_name', 'email')
+  search_fields = ('first_name', 'last_name', 'nick_name')
   readonly_fields = ('registration_date',)
   actions = ["export_as_csv"]
   ordering = ('-registration_date',)

@@ -23,20 +23,10 @@ class CreatePlayerView(APIView):
     serializer_class = CreatePlayerSerializer
 
     def post(self, request):
-        email = request.data.get('email')
         nick_name = request.data.get('nick_name')
-
-        # if get_object_or_404(Player, email=email):
-        #     return Response({'message': f'{email} is alread registered'}, status=400)
 
         # if get_object_or_404(Player, nick_name=nick_name):
         #     return Response({'message': f'{nick_name} is already registered'}, status=400)
-
-        try:
-            Player.objects.get(email=email)
-            return Response({'message': 'Player with this email is already registered'}, status=400)
-        except ObjectDoesNotExist:
-            pass
 
         try:
             Player.objects.get(nick_name=nick_name)
