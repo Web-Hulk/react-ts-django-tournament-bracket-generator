@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getData, postData } from "../../api/axios";
-import { Form } from "../../components/PlayersRegistration/Form";
-import { RegistrationClosed } from "../../components/PlayersRegistration/RegistrationClosed";
-import { SuccessfullFormSubmission } from "../../components/PlayersRegistration/SuccessfullFormSubmission";
+import { Form } from "../../components/PlayerRegistration/Form/Form";
+import { RegistrationClosed } from "../../components/PlayerRegistration/RegistrationClosed";
+import { SuccessfullFormSubmission } from "../../components/PlayerRegistration/SuccessfullFormSubmission";
 import { FormErrorType, Player } from "../../types";
-import "./PlayersRegistration.scss";
+import "./PlayerRegistration.scss";
 
-export const PlayersRegistration = () => {
+export const PlayerRegistration = () => {
   const [formData, setFormData] = useState<Player>({
     first_name: "",
     last_name: "",

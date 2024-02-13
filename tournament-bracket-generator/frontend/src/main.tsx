@@ -10,7 +10,7 @@ import { Home } from "./pages/Home/Home.tsx";
 import { KnockoutStage } from "./pages/KnockoutStage/KnockoutStage.tsx";
 import { Matches } from "./pages/Matches/Matches.tsx";
 import { PlayerDetails } from "./pages/PlayerDetails/PlayerDetails.tsx";
-import { PlayersRegistration } from "./pages/PlayersRegistration/PlayersRegistration.tsx";
+import { PlayerRegistration } from "./pages/PlayerRegistration/PlayerRegistration.tsx";
 import { TournamentInfo } from "./pages/TournamentInfo/TournamentInfo.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <Home />,
         errorElement: <ErrorPage />,
       },
-      { path: "/players-registration", element: <PlayersRegistration /> },
+      { path: "/players-registration", element: <PlayerRegistration /> },
       { path: "/fixtures", element: <Matches /> },
       { path: "/group-stage", element: <GroupStage /> },
       { path: "/knockout-stage", element: <KnockoutStage /> },
