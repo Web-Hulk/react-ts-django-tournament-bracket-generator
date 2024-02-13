@@ -1,5 +1,8 @@
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { postData } from "../../api/axios";
+import { FeedbackForm } from "../../components/Feedback/FeedbackForm";
+import { SubmittedFeedback } from "../../components/Feedback/SubmittedFeedback";
 import "./Feedback.scss";
 
 export const Feedback = () => {
@@ -33,49 +36,19 @@ export const Feedback = () => {
   };
 
   return (
-    <div>
+    <Box className="feedback-container">
       {isFeedbackSubmitted ? (
-        <div>
-          <p>You selected {rateNumber} out 5</p>
-          <p>Thanks for your feedback!</p>
-          <p>
-            We appreciate you taking the time to give a rating. If you ever need
-            more support, don't hesitate to get in touch.
-          </p>
-        </div>
+        <SubmittedFeedback rateNumber={rateNumber} />
       ) : (
-        <>
-          <h1>Please, tell us how much you like the application!</h1>
-
-          <div>
-            {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={`Rate - ${value}`}
-                onClick={() => handleRateButton(value)}
-                className={`button ${value === rateNumber ? "active" : ""}`}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
-
-          <textarea name="comment" value={comment} onChange={handleComment} />
-          {/* I want to make it custom, similar to Twitter! */}
-          <span>{numberOfWordsInTextarea}/500</span>
-
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={!rateNumber || !comment || numberOfWordsInTextarea > 500}
-          >
-            Submit
-          </button>
-
-          {numberOfWordsInTextarea > 500 ? (
-            <p>Too many letters: {numberOfWordsInTextarea - 500}</p>
-          ) : null}
-        </>
+        <FeedbackForm
+          rateNumber={rateNumber}
+          comment={comment}
+          numberOfWordsInTextarea={numberOfWordsInTextarea}
+          handleRateButton={handleRateButton}
+          handleComment={handleComment}
+          handleSubmit={handleSubmit}
+        />
       )}
-    </div>
+    </Box>
   );
 };
