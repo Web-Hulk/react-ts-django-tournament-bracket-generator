@@ -19,7 +19,7 @@ const FILTER_BUTTONS = [
   { name: "Final", value: "F" },
 ];
 
-export const Matches = () => {
+export const Fixtures = () => {
   const [fixtures, setFixtures] = useState<FixturesDTO[]>([]);
   const [filteredFixtures, setFilteredFixtures] = useState<FixturesDTO[]>([]);
 
