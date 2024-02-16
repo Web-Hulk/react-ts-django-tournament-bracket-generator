@@ -1,11 +1,11 @@
 import { Box, Button } from "@mui/material";
 
-type PlayerStatItem = {
+type PlayerStatItemProps = {
   title: string;
   value: number | string;
 };
 
-const PlayerStatItem = ({ title, value }: PlayerStatItem) => {
+const PlayerStatItem = ({ title, value }: PlayerStatItemProps) => {
   return (
     <Box className="stats__item">
       <p className="stats__item-key">{title}</p>

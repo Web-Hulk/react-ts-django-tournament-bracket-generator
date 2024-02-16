@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { getData } from "../../api/axios";
+import { GroupTable } from "../../components/GroupStage/GroupTable";
 import { Groups } from "../../types";
-import { GroupTable } from "./GroupTable/GroupTable";
+import "./GroupStage.scss";
 
 export const GroupStage = () => {
   const [groupStagesData, setGroupStagesData] = useState<Groups[]>([]);
@@ -19,6 +20,7 @@ export const GroupStage = () => {
 
   const groups = ["A", "B", "C", "D"].map((groupName) => {
     const groupData = groupStagesData.filter((item) => item[groupName]);
+
     return (
       <GroupTable
         key={groupName}
@@ -28,10 +30,5 @@ export const GroupStage = () => {
     );
   });
 
-  return (
-    <div>
-      <h1>Groups</h1>
-      {groups}
-    </div>
-  );
+  return <>{groups}</>;
 };

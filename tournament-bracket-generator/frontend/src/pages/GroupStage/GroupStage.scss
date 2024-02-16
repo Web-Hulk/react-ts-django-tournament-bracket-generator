@@ -1,0 +1,37 @@
+@import "../../colors.scss";
+
+.group-container {
+  max-width: 1024px;
+  margin: 20px auto;
+  background-color: $color-box-background;
+  border-radius: 12px;
+  padding: 24px;
+
+  .table-row {
+    .table-row__player {
+      text-decoration: none;
+      color: $color-text;
+      font-weight: bold;
+    }
+
+    .MuiSvgIcon-root {
+      display: flex;
+
+      &.icon-yes {
+        color: $color-win;
+      }
+
+      &.icon-no {
+        color: $color-loss;
+      }
+    }
+
+    &.qualified {
+      // border-left: 5px solid $color-primary;
+    }
+
+    &:last-child td {
+      border: 0;
+    }
+  }
+}
