@@ -1,3 +1,4 @@
+import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getData } from "../../api/axios";
 import { GroupTable } from "../../components/GroupStage/GroupTable";
@@ -21,11 +22,17 @@ export const GroupStage = () => {
   const groups = ["A", "B", "C", "D"].map((groupName) => {
     const groupData = groupStagesData.filter((item) => item[groupName]);
 
-    return (
+    return groupData.length ? (
       <GroupTable
         key={groupName}
         groupsData={groupData}
         groupName={groupName}
+      />
+    ) : (
+      <Skeleton
+        variant="rectangular"
+        className="group-container"
+        height={360}
       />
     );
   });
