@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { getData } from "../../api/axios";
-import { Fixture } from "../../components/Fixtures/Fixture";
+import { Fixture } from "../../components/Fixture/Fixture";
 import { FixtureFilters } from "../../components/Fixtures/FixtureFilters";
 import { FixtureDTO } from "../../types";
 import "./Fixtures.scss";
@@ -31,9 +31,9 @@ export const Fixtures = () => {
   );
 
   const getFixtures = () => {
+    setIsDataLoading(true);
     getData("fixtures/")
       .then((response) => {
-        setIsDataLoading(true);
         console.log("Fixtures: ", response.data.results);
         setFixtures(response.data.results);
         setFilteredFixtures(response.data.results);
@@ -41,6 +41,7 @@ export const Fixtures = () => {
       })
       .catch((error) => {
         console.log(error);
+        setIsDataLoading(false);
       });
   };
 
@@ -60,36 +61,45 @@ export const Fixtures = () => {
       />
 
       <Box className="fixture-container">
-        {filteredFixtures.map(
-          (
-            {
-              player,
-              opponent,
-              player_goals_1st_leg,
-              player_goals_2nd_leg,
-              opponent_goals_1st_leg,
-              opponent_goals_2nd_leg,
-              stage,
-              status,
-              match_number,
-            },
-            index
-          ) => (
-            <Fixture
-              key={`Stage -${index}`}
-              player={player}
-              opponent={opponent}
-              player_goals_1st_leg={player_goals_1st_leg}
-              player_goals_2nd_leg={player_goals_2nd_leg}
-              opponent_goals_1st_leg={opponent_goals_1st_leg}
-              opponent_goals_2nd_leg={opponent_goals_2nd_leg}
-              stage={stage}
-              status={status}
-              match_number={match_number}
-              isDataLoading={isDataLoading}
-            />
-          )
-        )}
+        {isDataLoading
+          ? // 32 because the maximum amount of matches is 32, I haven't found better solution
+            Array.from({ length: 32 }).map((_, index) => (
+              <Skeleton
+                key={index}
+                variant="rectangular"
+                className="fixture"
+                height={165}
+              />
+            ))
+          : filteredFixtures.map(
+              (
+                {
+                  player,
+                  opponent,
+                  player_goals_1st_leg,
+                  player_goals_2nd_leg,
+                  opponent_goals_1st_leg,
+                  opponent_goals_2nd_leg,
+                  stage,
+                  status,
+                  match_number,
+                },
+                index
+              ) => (
+                <Fixture
+                  key={`Stage -${index}`}
+                  player={player}
+                  opponent={opponent}
+                  player_goals_1st_leg={player_goals_1st_leg}
+                  player_goals_2nd_leg={player_goals_2nd_leg}
+                  opponent_goals_1st_leg={opponent_goals_1st_leg}
+                  opponent_goals_2nd_leg={opponent_goals_2nd_leg}
+                  stage={stage}
+                  status={status}
+                  match_number={match_number}
+                />
+              )
+            )}
       </Box>
     </Box>
   );

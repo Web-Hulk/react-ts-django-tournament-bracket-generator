@@ -58,7 +58,3 @@ export interface FixtureDTO {
   status: string;
   match_number: number;
 }
-
-export interface FixtureProps extends FixtureDTO {
-  isDataLoading: boolean;
-}
