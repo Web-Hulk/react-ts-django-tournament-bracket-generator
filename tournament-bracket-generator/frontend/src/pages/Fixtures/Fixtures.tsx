@@ -3,15 +3,16 @@ import { useCallback, useEffect, useState } from "react";
 import { getData } from "../../api/axios";
 import { Fixture } from "../../components/Fixtures/Fixture";
 import { FixtureFilters } from "../../components/Fixtures/FixtureFilters";
-import { FixtureProps } from "../../types";
+import { FixtureDTO } from "../../types";
 import "./Fixtures.scss";
 
 const STAGE_ORDER: string[] = ["G", "QF", "SF", "3P", "F"];
 
 export const Fixtures = () => {
-  const [fixtures, setFixtures] = useState<FixtureProps[]>([]);
-  const [filteredFixtures, setFilteredFixtures] = useState<FixtureProps[]>([]);
+  const [fixtures, setFixtures] = useState<FixtureDTO[]>([]);
+  const [filteredFixtures, setFilteredFixtures] = useState<FixtureDTO[]>([]);
   const [stage, setStage] = useState<string>("");
+  const [isDataLoading, setIsDataLoading] = useState<boolean>(false);
 
   const filterFixturesByStage = useCallback(
     (stage: string) => {
@@ -32,9 +33,11 @@ export const Fixtures = () => {
   const getFixtures = () => {
     getData("fixtures/")
       .then((response) => {
+        setIsDataLoading(true);
         console.log("Fixtures: ", response.data.results);
         setFixtures(response.data.results);
         setFilteredFixtures(response.data.results);
+        setIsDataLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -47,7 +50,7 @@ export const Fixtures = () => {
 
   useEffect(() => {
     filterFixturesByStage(stage);
-  }, [fixtures]);
+  }, [fixtures, filterFixturesByStage, stage]);
 
   return (
     <Box className="fixtures-container">
@@ -83,6 +86,7 @@ export const Fixtures = () => {
               stage={stage}
               status={status}
               match_number={match_number}
+              isDataLoading={isDataLoading}
             />
           )
         )}

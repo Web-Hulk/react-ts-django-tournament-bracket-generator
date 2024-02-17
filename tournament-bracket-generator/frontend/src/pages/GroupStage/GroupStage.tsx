@@ -30,6 +30,7 @@ export const GroupStage = () => {
       />
     ) : (
       <Skeleton
+        key={`skeleton-${groupName}`}
         variant="rectangular"
         className="group-container"
         height={360}

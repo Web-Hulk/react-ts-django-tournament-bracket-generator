@@ -47,7 +47,7 @@ export type FilterButtons = {
   value: string;
 };
 
-export type FixtureProps = {
+export interface FixtureDTO {
   player: string;
   opponent: string;
   player_goals_1st_leg: number;
@@ -57,4 +57,8 @@ export type FixtureProps = {
   stage: string;
   status: string;
   match_number: number;
-};
+}
+
+export interface FixtureProps extends FixtureDTO {
+  isDataLoading: boolean;
+}

@@ -11,7 +11,7 @@ type Group = {
   points: number;
   qualified: boolean;
 }[];
-0
+
 type Groups = {
   [key: string]: Group;
 };

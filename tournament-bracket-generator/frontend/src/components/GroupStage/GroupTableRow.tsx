@@ -1,6 +1,7 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DoNotDisturbOnIcon from "@mui/icons-material/DoNotDisturbOn";
 import { TableCell, TableRow } from "@mui/material";
+import classNames from "classnames";
 import { Link } from "react-router-dom";
 import { Groups } from "../../types";
 
@@ -24,7 +25,11 @@ export const GroupTableRow = ({ position, group }: GroupTableRowProps) => {
   } = Object.values(group)[0];
 
   return (
-    <TableRow className="table-row qualified">
+    <TableRow
+      className={classNames("table-row", {
+        qualified: qualified,
+      })}
+    >
       <TableCell>{position}</TableCell>
       <TableCell>
         <Link to={`/player-details/${player.id}`} className="table-row__player">

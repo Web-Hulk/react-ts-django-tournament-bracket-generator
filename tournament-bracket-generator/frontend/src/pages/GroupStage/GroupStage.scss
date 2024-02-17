@@ -3,35 +3,43 @@
 .group-container {
   max-width: 1024px;
   margin: 20px auto;
-  background-color: $color-box-background;
-  border-radius: 12px;
-  padding: 24px;
+  width: 95%;
 
-  .table-row {
-    .table-row__player {
-      text-decoration: none;
-      color: $color-text;
-      font-weight: bold;
-    }
+  .group-header {
+    margin-bottom: 12px;
+  }
 
-    .MuiSvgIcon-root {
-      display: flex;
+  .table-container {
+    background-color: $color-box-background;
+    border-radius: 12px;
+    padding: 10px 20px;
 
-      &.icon-yes {
-        color: $color-win;
+    .table-row {
+      .table-row__player {
+        text-decoration: none;
+        color: $color-text;
+        font-weight: bold;
       }
 
-      &.icon-no {
-        color: $color-loss;
+      .MuiSvgIcon-root {
+        display: flex;
+
+        &.icon-yes {
+          color: $color-win;
+        }
+
+        &.icon-no {
+          color: $color-loss;
+        }
       }
-    }
 
-    &.qualified {
-      // border-left: 5px solid $color-primary;
-    }
+      &.qualified {
+        border-left: 5px solid $color-primary;
+      }
 
-    &:last-child td {
-      border: 0;
+      &:last-child td {
+        border: 0;
+      }
     }
   }
 }
