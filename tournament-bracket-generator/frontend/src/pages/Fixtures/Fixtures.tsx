@@ -1,27 +1,17 @@
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getData } from "../../api/axios";
-import { Autocomplete } from "../../components/Autocomplete/Autocomplete";
+import { Fixture } from "../../components/Fixtures/Fixture";
+import { FixtureFilters } from "../../components/Fixtures/FixtureFilters";
+import { FixtureProps } from "../../types";
+import "./Fixtures.scss";
 
-interface FixturesDTO {
-  player: number;
-  opponent: number;
-  player_goals_1st_leg: number;
-  opponent_goals_1st_leg: number;
-  stage: string;
-}
-
-const FILTER_BUTTONS = [
-  { name: "All", value: "" },
-  { name: "Group", value: "G" },
-  { name: "Quarter-finals", value: "QF" },
-  { name: "Semi-finals", value: "SF" },
-  { name: "3rd place", value: "3P" },
-  { name: "Final", value: "F" },
-];
+const STAGE_ORDER = ["G", "QF", "SF", "3P", "F"];
 
 export const Fixtures = () => {
-  const [fixtures, setFixtures] = useState<FixturesDTO[]>([]);
-  const [filteredFixtures, setFilteredFixtures] = useState<FixturesDTO[]>([]);
+  const [fixtures, setFixtures] = useState<FixtureProps[]>([]);
+  const [filteredFixtures, setFilteredFixtures] = useState<FixtureProps[]>([]);
+  const [stage, setStage] = useState<string>("");
 
   useEffect(() => {
     getData("fixtures/")
@@ -35,64 +25,60 @@ export const Fixtures = () => {
       });
   }, []);
 
-  const filterMatchesByStage = (stage: string) => {
-    if (stage) {
-      const filterMatchesByStage = fixtures.filter(
-        (fixture) => fixture.stage === stage
-      );
-      setFilteredFixtures(filterMatchesByStage);
-    } else {
-      setFilteredFixtures(fixtures);
-    }
+  const filterFixturesByStage = (stage: string) => {
+    const filtered = stage
+      ? fixtures.filter((fixture) => fixture.stage === stage)
+      : [...fixtures]; // create a new array to avoid mutating the original one
+
+    // Sort the fixtures based on the stage order
+    filtered.sort(
+      (a, b) => STAGE_ORDER.indexOf(a.stage) - STAGE_ORDER.indexOf(b.stage)
+    );
+
+    console.log("filtered: ", filtered);
+
+    setStage(stage);
+    setFilteredFixtures(filtered);
   };
 
   return (
-    <div>
-      <h1>Matches</h1>
+    <Box className="fixtures-container">
+      <FixtureFilters
+        stage={stage}
+        filterFixturesByStage={filterFixturesByStage}
+      />
 
-      <Autocomplete />
-
-      <div>
-        {FILTER_BUTTONS.map(({ name, value }) => (
-          <button
-            key={`Filter - ${name}`}
-            type="button"
-            onClick={() => filterMatchesByStage(value)}
-          >
-            {name}
-          </button>
-        ))}
-      </div>
-
-      {filteredFixtures.map(
-        (
-          {
-            player,
-            opponent,
-            player_goals_1st_leg,
-            opponent_goals_1st_leg,
-            stage,
-          },
-          index
-        ) => (
-          <div
-            key={`Stage -${index}`}
-            style={{
-              width: "50%",
-              margin: "0 auto",
-              border: "1px solid gray",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <p>Stage: {stage}</p>
-            <p>{player}</p>
-            <p>{player_goals_1st_leg}</p>
-            <p>{opponent}</p>
-            <p>{opponent_goals_1st_leg}</p>
-          </div>
-        )
-      )}
-    </div>
+      <Box className="fixture-container">
+        {filteredFixtures.map(
+          (
+            {
+              player,
+              opponent,
+              player_goals_1st_leg,
+              player_goals_2nd_leg,
+              opponent_goals_1st_leg,
+              opponent_goals_2nd_leg,
+              stage,
+              status,
+              match_number,
+            },
+            index
+          ) => (
+            <Fixture
+              key={`Stage -${index}`}
+              player={player}
+              opponent={opponent}
+              player_goals_1st_leg={player_goals_1st_leg}
+              player_goals_2nd_leg={player_goals_2nd_leg}
+              opponent_goals_1st_leg={opponent_goals_1st_leg}
+              opponent_goals_2nd_leg={opponent_goals_2nd_leg}
+              stage={stage}
+              status={status}
+              match_number={match_number}
+            />
+          )
+        )}
+      </Box>
+    </Box>
   );
 };

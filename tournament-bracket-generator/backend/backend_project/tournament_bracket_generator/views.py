@@ -41,7 +41,7 @@ class CreatePlayerView(APIView):
         return Response(serializer.errors, status = 400)
     
 class FixtureView(generics.ListAPIView):
-    queryset = Fixture.objects.all()
+    queryset = Fixture.objects.all().order_by('match_number')
     serializer_class = FixtureSerializer
 
 class GroupStageView(generics.ListAPIView):

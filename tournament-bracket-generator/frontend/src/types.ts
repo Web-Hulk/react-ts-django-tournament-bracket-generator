@@ -40,3 +40,21 @@ export type FormErrorType = {
   last_name_error: string;
   nick_name_error: string;
 };
+
+// Fixtures
+export type FilterButtons = {
+  name: string;
+  value: string;
+};
+
+export type FixtureProps = {
+  player: string;
+  opponent: string;
+  player_goals_1st_leg: number;
+  player_goals_2nd_leg: number;
+  opponent_goals_1st_leg: number;
+  opponent_goals_2nd_leg: number;
+  stage: string;
+  status: string;
+  match_number: number;
+};
