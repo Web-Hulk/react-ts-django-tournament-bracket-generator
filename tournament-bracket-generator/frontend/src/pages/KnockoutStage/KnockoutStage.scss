@@ -39,7 +39,7 @@
     margin-right: 20px;
   }
 
-  .stage:nth-child(2) .fixtures-container .fixture-container .fixture {
+  .stage.column2 .fixtures-container .fixture-container .fixture {
     position: relative;
 
     &:nth-child(1) {
@@ -51,7 +51,7 @@
     }
   }
 
-  .stage:nth-child(3) .fixtures-container .fixture-container {
+  .stage.column3 .fixtures-container .fixture-container {
     flex-direction: column-reverse;
 
     .fixture {
@@ -65,12 +65,5 @@
         top: 210px;
       }
     }
-  }
-}
-
-@media (max-width: 768px) {
-  .knockout-container {
-    height: 100%;
-    overflow: auto;
   }
 }

@@ -59,6 +59,11 @@
             width: 100%;
           }
 
+          .player__goals-1st {
+            min-width: 20px;
+            text-align: center;
+          }
+
           .player__goals-2nd {
             color: $color-link;
             margin-left: 10px;

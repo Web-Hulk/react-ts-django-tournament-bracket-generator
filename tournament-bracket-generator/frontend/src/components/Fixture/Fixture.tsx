@@ -37,8 +37,8 @@ export const Fixture = ({
           })}
         >
           <p className="player__name">{player}</p>
-          <p>{player_goals_1st_leg}</p>
-          {player_goals_2nd_leg && (
+          <p className="player__goals-1st">{player_goals_1st_leg}</p>
+          {player_goals_2nd_leg !== null && (
             <p className="player__goals-2nd">({player_goals_2nd_leg})</p>
           )}
         </Box>
@@ -51,8 +51,8 @@ export const Fixture = ({
           })}
         >
           <p className="player__name">{opponent}</p>
-          <p>{opponent_goals_1st_leg}</p>
-          {player_goals_2nd_leg && (
+          <p className="player__goals-1st">{opponent_goals_1st_leg}</p>
+          {player_goals_2nd_leg !== null && (
             <p className="player__goals-2nd">({opponent_goals_2nd_leg})</p>
           )}
         </Box>

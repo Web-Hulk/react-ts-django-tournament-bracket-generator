@@ -74,21 +74,21 @@ export const KnockoutStage = () => {
 
   return (
     <Box className="knockout-container">
-      <Box className="stage">
+      <Box className="stage column1">
         <Box className="header">Quarterfinals</Box>
         <Box className="fixtures-container">
           <Stage fixtures={quarterFinals} />
         </Box>
       </Box>
 
-      <Box className="stage">
+      <Box className="stage column2">
         <Box className="header">Semifinals</Box>
         <Box className="fixtures-container">
           <Stage fixtures={semiFinals} />
         </Box>
       </Box>
 
-      <Box className="stage">
+      <Box className="stage column3">
         <Box className="header">Finals</Box>
         <Box className="fixtures-container">
           <Stage fixtures={finals} />
